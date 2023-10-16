@@ -49,6 +49,10 @@ export class Heap<T extends HeapItem> {
     return check.equals(item);
   }
 
+  public updateItem(item: T) {
+    this.sortUp(item);
+  }
+
   private sortUp(item: T) {
     let parentIndex = (item.index - 1) / 2;
     while (true) {

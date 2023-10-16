@@ -62,6 +62,8 @@ export class Pathfinding {
 
           if (!openSet.contains(neighbor)) {
             openSet.add(neighbor);
+          } else {
+            openSet.updateItem(neighbor);
           }
         }
       }
@@ -91,9 +93,7 @@ export class Pathfinding {
       return [];
     }
 
-    console.log('findPathGameObjects', startPosition, start);
-
-    return [];
+    return this.findPathBetweenTl(startPosition, targetPosition);
   }
 
   private getDistance(first: Node, second: Node) {
