@@ -1,0 +1,10 @@
+.github/
+docs/
+scripts/
+src/
+.eslintignore
+.eslintrc.json
+.gitignore
+.jsdoc.json
+tsconfig.json
+.vscode

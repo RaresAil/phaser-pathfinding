@@ -1,0 +1,23 @@
+name: Package Security Scan
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
+  schedule:
+    - cron: '0 0 * * 3'
+
+jobs:
+  audit:
+    name: Package Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.0
+          cache: 'yarn'
+      - name: Package Security Scan
+        run: yarn audit --level info --groups dependencies

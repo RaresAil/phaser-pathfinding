@@ -1,0 +1,31 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    branches: ['master']
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 19.x, 20.x]
+
+    name: Pull Request - Node.js ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Code Quality Analysis
+        run: yarn lint
+      - name: Package Security Scan
+        run: yarn audit --level info --groups dependencies
+      - name: Build
+        run: yarn build
+      - name: Check Documentation
+        run: yarn generate:docs
