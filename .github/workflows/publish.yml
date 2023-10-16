@@ -1,0 +1,72 @@
+name: Publish to Registry
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.0
+          cache: 'yarn'
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+
+  publish-npm:
+    name: Publish to NPM
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment:
+      name: NPM
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.0
+          cache: 'yarn'
+          registry-url: https://registry.npmjs.org/
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  publish-github:
+    name: Publish to GitHub
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.0
+          cache: 'yarn'
+          registry-url: https://npm.pkg.github.com
+          scope: '@raresail'
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: Publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

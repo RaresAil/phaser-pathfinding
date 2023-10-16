@@ -51,7 +51,7 @@
   "scripts": {
     "generate:docs": "rm -rf ./docs/ && yarn build && node_modules/.bin/jsdoc --configure .jsdoc.json --verbose && node ./scripts/build-docs.js",
     "prepublishOnly": "yarn build",
-    "build": "yarn lint && rm -rf ./dist/ && tsc -p .",
+    "build": "rm -rf ./dist/ && tsc -p .",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {

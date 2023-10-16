@@ -29,7 +29,20 @@ const styleFile = path.join(location, 'styles', 'jsdoc-default.css');
     const fileData = fs
       .readFileSync(filePath)
       .toString()
-      .replace(/module:([a-zA-Z]+)\./gm, '');
+      .replace(/module:([a-zA-Z]+)\./gm, '')
+      .replace(
+        /<script src="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/highlight\.js\/9\.7\.0\/highlight\.min\.js"><\/script>/gm,
+        `
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+`
+      )
+      .replace(/(<!-- start Mixpanel -->((.|\n)*)<!-- end Mixpanel -->)/gm, '')
+      .replace(
+        /<link href="https:\/\/www\.braintreepayments\.com\/images\/favicon-ccda0b14\.png" rel="icon" type="image\/png">/gm,
+        ''
+      );
+
     fs.writeFileSync(filePath, fileData);
   });
 
