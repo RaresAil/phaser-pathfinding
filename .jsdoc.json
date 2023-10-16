@@ -1,0 +1,27 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "source": {
+    "include": ["dist", "package.json", "README.md"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs/)"
+  },
+  "plugins": ["plugins/markdown", "node_modules/jsdoc-escape-at"],
+  "templates": {
+    "referenceTitle": "@raresail/phaser-pathfinding",
+    "disableSort": false,
+    "collapse": false,
+    "resources": {
+      "github": "https://github.com/RaresAil/phaser-pathfinding"
+    }
+  },
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "template": "./node_modules/braintree-jsdoc-template"
+  }
+}

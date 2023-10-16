@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      grid.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      @raresail/phaser-pathfinding
+    </h3>
+
+    
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="https://github.com/RaresAil/phaser-pathfinding">github</a>
+      
+    
+
+    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        grid.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Grid = void 0;
+var phaser_1 = __importDefault(require("phaser"));
+var lodash_1 = __importDefault(require("lodash"));
+var node_1 = require("./node");
+/**
+ * @class
+ * @classdesc
+ * The grid class is used to create a grid that the pathfinding algorithm can use
+ * @param {number} sizeX The width of the grid in tile units
+ * @param {number} sizeY The height of the grid in tile units
+ * @param {number} walkableLayerIndex
+ * @memberof module:PhaserPathfinding
+ */
+var Grid = /** @class */ (function () {
+    function Grid(sizeX, sizeY, walkableLayerIndex) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.walkableLayerIndex = walkableLayerIndex;
+        this.grid = [];
+    }
+    /**
+     * Gets a node from the grid at a specific position in tile units or undefined if the position is not in the grid
+     * @param {number} x The x position in tile units
+     * @param {number} y The y position in tile units
+     * @return {Node?} The node at the position or undefined if the position is not in the grid
+     */
+    Grid.prototype.getNode = function (x, y) {
+        var _a;
+        return lodash_1.default.cloneDeep((_a = this.grid[parseInt(x.toString())]) === null || _a === void 0 ? void 0 : _a[parseInt(y.toString())]);
+    };
+    /**
+     * This method is used internally by the pathfinding algorithm
+     * @ignore
+     */
+    Grid.prototype.getNeighbors = function (node) {
+        var neighbors = [];
+        for (var x = -1; x &lt;= 1; x++) {
+            for (var y = -1; y &lt;= 1; y++) {
+                if (x === 0 &amp;&amp; y === 0) {
+                    continue;
+                }
+                var posCheck = new phaser_1.default.Math.Vector2(node.x + x, node.y + y);
+                if (posCheck.x >= 0 &amp;&amp;
+                    posCheck.x &lt; this.sizeX &amp;&amp;
+                    posCheck.y >= 0 &amp;&amp;
+                    posCheck.y &lt; this.sizeY) {
+                    var neighbor = this.getNode(posCheck.x, posCheck.y);
+                    if (neighbor) {
+                        neighbors.push(neighbor);
+                    }
+                }
+            }
+        }
+        return neighbors;
+    };
+    /**
+     * Gets the position in tile units from the position in pixels or undefined if the position is not in the walkable grid
+     * @param {Phaser.Math.Vector2} position The position in pixels
+     * @return {Phaser.Math.Vector2?} The position in tile unit or undefined if the position is not in the walkable grid
+     */
+    Grid.prototype.getTilePositionInWorld = function (position) {
+        var _a;
+        var tile = (_a = this.map) === null || _a === void 0 ? void 0 : _a.getTileAtWorldXY(position.x, position.y, false, undefined, this.walkableLayerIndex);
+        if (!tile) {
+            return;
+        }
+        return new phaser_1.default.Math.Vector2(tile.x, tile.y);
+    };
+    /**
+     * Gets the position in pixels for a specific node
+     * @param {Node} node The node to get the position from
+     * @return {Phaser.Math.Vector2?} The position in the grid in pixels
+     */
+    Grid.prototype.getWorldPositionFromNode = function (node) {
+        var _a;
+        var tile = (_a = this.map) === null || _a === void 0 ? void 0 : _a.getTileAt(node.x, node.y, false, this.walkableLayerIndex);
+        if (!tile) {
+            return;
+        }
+        return new phaser_1.default.Math.Vector2(tile.pixelX, tile.pixelY);
+    };
+    /**
+     * Creates a new grid from a tilemap
+     * @param {Phaser.Tilemaps.Tilemap} map The tilemap to create the grid from
+     * @param {Phaser.Tilemaps.TilemapLayer[]} obstacles An array of tilemap layers that are considered as obstacles
+     * @param {number} [walkableLayerIndex=0] - The layer index that is considered as walkable Default: 0
+     * @return {Grid} The created grid
+     */
+    Grid.createFromMap = function (map, obstacles, walkableLayerIndex) {
+        if (walkableLayerIndex === void 0) { walkableLayerIndex = 0; }
+        var base = map.getLayer(walkableLayerIndex);
+        if (!base) {
+            throw new Error('No base layer found');
+        }
+        var grid = new Grid(base.width, base.height, walkableLayerIndex).setMap(map);
+        obstacles.forEach(function (_a) {
+            var data = _a.layer.data;
+            data.forEach(function (row) {
+                row.forEach(function (tile) {
+                    if (tile.index === -1) {
+                        return;
+                    }
+                    grid.addNode(tile.x, tile.y, false, tile.width, tile.height);
+                });
+            });
+        });
+        base.data.forEach(function (row) {
+            row.forEach(function (tile) {
+                if (tile.index === -1) {
+                    return;
+                }
+                grid.addNode(tile.x, tile.y, true, tile.width, tile.height);
+            });
+        });
+        return grid;
+    };
+    Grid.prototype.setMap = function (map) {
+        this.map = map;
+        return this;
+    };
+    Grid.prototype.addNode = function (x, y, walkable, width, height) {
+        var _a;
+        if (this.getNode(x, y)) {
+            return;
+        }
+        this.grid[parseInt(y.toString())] = (_a = this.grid[parseInt(y.toString())]) !== null &amp;&amp; _a !== void 0 ? _a : [];
+        this.grid[parseInt(y.toString())][parseInt(x.toString())] = new node_1.Node(walkable, x, y, width, height);
+    };
+    return Grid;
+}());
+exports.Grid = Grid;
+//# sourceMappingURL=grid.js.map</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
+</body>
+</html>
