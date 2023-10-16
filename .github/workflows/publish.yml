@@ -45,6 +45,7 @@ jobs:
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_TLS_REJECT_UNAUTHORIZED: 0
 
   publish-github:
     name: Publish to GitHub
