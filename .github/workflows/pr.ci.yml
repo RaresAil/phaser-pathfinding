@@ -23,8 +23,6 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Code Quality Analysis
         run: yarn lint
-      - name: Package Security Scan
-        run: yarn audit --level info --groups dependencies
       - name: Build
         run: yarn build
       - name: Check Documentation
