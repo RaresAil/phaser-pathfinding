@@ -138,8 +138,6 @@ class Example extends Phaser.Scene {
     this.grid = Grid.createFromMap(this.map, [obstaclesLayer]);
     this.pathfinding = new Pathfinding(this.grid);
 
-    console.log(this.pathfinding);
-
     this.source = this.add.rectangle(24, 24, 24, 24, 0xf1c40f);
   }
 
@@ -152,7 +150,6 @@ class Example extends Phaser.Scene {
       return;
     }
 
-    console.log('findPathBetweenTl', tilePosition);
     const path = await this.pathfinding.findPathBetweenTl(
       sourceCurrentTile,
       tilePosition

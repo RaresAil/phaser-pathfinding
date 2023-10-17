@@ -73,8 +73,12 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@raresail/phaser-pathfinding@file:../dist":
-  version "0.0.0"
+"@raresail/phaser-pathfinding@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@raresail/phaser-pathfinding/-/phaser-pathfinding-1.0.2.tgz#0fd106039b6779172db59351d86fac9d40da9906"
+  integrity sha512-NlXVqy26/bA6PCHtDty8bf8pxocIH1DlT4iqTrYMS4UKjqr5i1dCWstRDNQIm/ajQ1JJ8GmgQXEgarkqC7G6tA==
+  dependencies:
+    lodash "^4.17.21"
 
 "@types/body-parser@*":
   version "1.19.3"
@@ -1320,6 +1324,11 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 media-typer@0.3.0:
   version "0.3.0"
