@@ -35,20 +35,23 @@ export class Pathfinding {
     }
 
     const openSet = new Heap<Node>();
-    const closedSet = new Heap<Node>();
+    const closedSet: Record<string, true> = {};
 
     openSet.add(startNode);
 
     while (openSet.length > 0) {
       const currentNode = openSet.removeFirst();
-      closedSet.add(currentNode);
+      closedSet[currentNode.name.toString()] = true;
 
       if (currentNode.equals(targetNode)) {
         return this.retracePath(startNode, currentNode);
       }
 
       for (const neighbor of this.grid.getNeighbors(currentNode)) {
-        if (neighbor.walkable === false || closedSet.contains(neighbor)) {
+        if (
+          neighbor.walkable === false ||
+          closedSet[neighbor.name.toString()]
+        ) {
           continue;
         }
 

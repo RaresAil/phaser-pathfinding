@@ -8,3 +8,4 @@ src/
 .jsdoc.json
 tsconfig.json
 .vscode
+example

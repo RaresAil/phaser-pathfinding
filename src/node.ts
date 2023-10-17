@@ -37,6 +37,10 @@ export class Node extends HeapItem {
    */
   public worldY?: number;
 
+  public get name() {
+    return `${this.x},${this.y}`;
+  }
+
   constructor(
     /**
      * If true the node is walkable
