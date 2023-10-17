@@ -26,19 +26,30 @@ export class Grid {
    * Gets a node from the grid at a specific position in tile units or undefined if the position is not in the grid
    * @param {number} x The x position in tile units
    * @param {number} y The y position in tile units
+   * @param {module:PhaserPathfinding.Node[][]} [matrix=default] The matrix to get the node from, default is the current one
    * @return {module:PhaserPathfinding.Node?} The node at the position or undefined if the position is not in the grid
    */
-  public getNode(x: number, y: number): Node | undefined {
-    return _.cloneDeep(
-      this.grid[parseInt(y.toString())]?.[parseInt(x.toString())]
-    );
+  public getNode(
+    x: number,
+    y: number,
+    matrix: NodeMatrix = this.grid
+  ): Node | undefined {
+    return matrix[parseInt(y.toString())]?.[parseInt(x.toString())];
+  }
+
+  /**
+   * Clones the matrix of nodes, used internally by the pathfinding algorithm to avoid modifying the original grid when calculating costs
+   * @returns {module:PhaserPathfinding.Node[][]}
+   */
+  public cloneMatrix(): NodeMatrix {
+    return _.cloneDeep(this.grid);
   }
 
   /**
    * This method is used internally by the pathfinding algorithm
    * @ignore
    */
-  public getNeighbors(node: Node): Node[] {
+  public getNeighbors(node: Node, matrix: NodeMatrix = this.grid): Node[] {
     const neighbors: Node[] = [];
 
     for (let x = -1; x <= 1; x++) {
@@ -55,7 +66,7 @@ export class Grid {
           posCheck.y >= 0 &&
           posCheck.y < this.sizeY
         ) {
-          const neighbor = this.getNode(posCheck.x, posCheck.y);
+          const neighbor = this.getNode(posCheck.x, posCheck.y, matrix);
           if (neighbor) {
             neighbors.push(neighbor);
           }

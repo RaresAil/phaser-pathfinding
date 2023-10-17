@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
+import { Node, NodeMatrix } from './node';
 import { PathNode } from './path-node';
 import { Grid } from './grid';
 import { Heap } from './heap';
-import { Node } from './node';
 
 /**
  * @class
@@ -13,7 +13,11 @@ import { Node } from './node';
  * @memberof module:PhaserPathfinding
  */
 export class Pathfinding {
-  constructor(private readonly grid: Grid) {}
+  private readonly matrixClone: NodeMatrix = [];
+
+  constructor(private readonly grid: Grid) {
+    this.matrixClone = grid.cloneMatrix();
+  }
 
   /**
    * The 2 vectors must point to the position in tile unit not in px
@@ -27,8 +31,9 @@ export class Pathfinding {
     target: Phaser.Math.Vector2,
     simplify: boolean = false
   ): PathNode[] {
-    const startNode = this.grid.getNode(start.x, start.y);
-    const targetNode = this.grid.getNode(target.x, target.y);
+    const pathMatrix = _.cloneDeep(this.matrixClone);
+    const startNode = this.grid.getNode(start.x, start.y, pathMatrix);
+    const targetNode = this.grid.getNode(target.x, target.y, pathMatrix);
 
     if (!startNode || startNode.walkable === false) {
       return [];
@@ -51,7 +56,7 @@ export class Pathfinding {
         return this.retracePath(startNode, currentNode, simplify);
       }
 
-      for (const neighbor of this.grid.getNeighbors(currentNode)) {
+      for (const neighbor of this.grid.getNeighbors(currentNode, pathMatrix)) {
         if (
           neighbor.walkable === false ||
           closedSet[neighbor.name.toString()]
@@ -70,7 +75,6 @@ export class Pathfinding {
           if (!openSet.contains(neighbor)) {
             openSet.add(neighbor);
           } else {
-            console.log('update', neighbor);
             openSet.updateItem(neighbor);
           }
         }
@@ -123,7 +127,7 @@ export class Pathfinding {
     simplify: boolean
   ): PathNode[] {
     const path: Node[] = [];
-    let currentNode = _.cloneDeep(target);
+    let currentNode = target;
 
     while (!currentNode.equals(start)) {
       if (!currentNode.parent) {
@@ -163,12 +167,12 @@ export class Pathfinding {
 
     for (let i = 1; i < path.length; i++) {
       const newPosition = new Phaser.Math.Vector2(
-        path[i - 1].x - path[+i].x,
-        path[i - 1].y - path[+i].y
+        path[i - 1].x - path[parseInt(i.toString())].x,
+        path[i - 1].y - path[parseInt(i.toString())].y
       );
 
       if (!oldPosition.equals(newPosition)) {
-        const node = path[+i];
+        const node = path[i - 1];
         normalizedPath.push(
           new PathNode(
             node.x,
