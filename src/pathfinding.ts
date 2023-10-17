@@ -1,4 +1,6 @@
 import _ from 'lodash';
+
+import { PathNode } from './path-node';
 import { Grid } from './grid';
 import { Heap } from './heap';
 import { Node } from './node';
@@ -17,12 +19,14 @@ export class Pathfinding {
    * The 2 vectors must point to the position in tile unit not in px
    * @param {Phaser.Math.Vector2} start The start position in tile unit
    * @param {Phaser.Math.Vector2} target The target position in tile unit
-   * @return {module:PhaserPathfinding.Node[]} An array of nodes that represent the path, empty if no path was found
+   * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+   * @return {module:PhaserPathfinding.PathNode[]} An array of nodes that represent the path, empty if no path was found
    */
   public findPathBetweenTl(
     start: Phaser.Math.Vector2,
-    target: Phaser.Math.Vector2
-  ): Node[] {
+    target: Phaser.Math.Vector2,
+    simplify: boolean = false
+  ): PathNode[] {
     const startNode = this.grid.getNode(start.x, start.y);
     const targetNode = this.grid.getNode(target.x, target.y);
 
@@ -44,7 +48,7 @@ export class Pathfinding {
       closedSet[currentNode.name.toString()] = true;
 
       if (currentNode.equals(targetNode)) {
-        return this.retracePath(startNode, currentNode);
+        return this.retracePath(startNode, currentNode, simplify);
       }
 
       for (const neighbor of this.grid.getNeighbors(currentNode)) {
@@ -66,6 +70,7 @@ export class Pathfinding {
           if (!openSet.contains(neighbor)) {
             openSet.add(neighbor);
           } else {
+            console.log('update', neighbor);
             openSet.updateItem(neighbor);
           }
         }
@@ -79,12 +84,14 @@ export class Pathfinding {
    * The 2 vectors must point to the position in pixels
    * @param {Phaser.Math.Vector2} start The start position in pixels
    * @param {Phaser.Math.Vector2} target The target position in tile unit
-   * @return {module:PhaserPathfinding.Node[]} An array of nodes that represent the path, empty if no path was found
+   * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+   * @return {module:PhaserPathfinding.PathNode[]} An array of nodes that represent the path, empty if no path was found
    */
   public findPathBetweenPx(
     start: Phaser.Math.Vector2,
-    target: Phaser.Math.Vector2
-  ): Node[] {
+    target: Phaser.Math.Vector2,
+    simplify: boolean = false
+  ): PathNode[] {
     if (!start || !target) {
       return [];
     }
@@ -96,7 +103,7 @@ export class Pathfinding {
       return [];
     }
 
-    return this.findPathBetweenTl(startPosition, targetPosition);
+    return this.findPathBetweenTl(startPosition, targetPosition, simplify);
   }
 
   private getDistance(first: Node, second: Node) {
@@ -110,9 +117,13 @@ export class Pathfinding {
     return 14 * disX + 10 * (disY - disX);
   }
 
-  private retracePath(start: Node, target: Node): Node[] {
+  private retracePath(
+    start: Node,
+    target: Node,
+    simplify: boolean
+  ): PathNode[] {
     const path: Node[] = [];
-    let currentNode = target;
+    let currentNode = _.cloneDeep(target);
 
     while (!currentNode.equals(start)) {
       if (!currentNode.parent) {
@@ -126,10 +137,53 @@ export class Pathfinding {
       const nodeToPush = currentNode;
       currentNode = currentNode.parent;
 
-      delete nodeToPush.parent;
-      path.push(_.cloneDeep(nodeToPush));
+      path.push(nodeToPush);
     }
 
-    return path.reverse();
+    return this.normalizePath(path, simplify).reverse();
+  }
+
+  private normalizePath(path: Node[], simplify: boolean): PathNode[] {
+    if (!simplify) {
+      return path.map(
+        (node) =>
+          new PathNode(
+            node.x,
+            node.y,
+            node.worldX!,
+            node.worldY!,
+            node.width,
+            node.height
+          )
+      );
+    }
+
+    const normalizedPath: PathNode[] = [];
+    let oldPosition = new Phaser.Math.Vector2();
+
+    for (let i = 1; i < path.length; i++) {
+      const newPosition = new Phaser.Math.Vector2(
+        path[i - 1].x - path[+i].x,
+        path[i - 1].y - path[+i].y
+      );
+
+      if (!oldPosition.equals(newPosition)) {
+        const node = path[+i];
+        normalizedPath.push(
+          new PathNode(
+            node.x,
+            node.y,
+            node.worldX!,
+            node.worldY!,
+            node.width,
+            node.height
+          )
+        );
+      }
+
+      oldPosition = newPosition;
+    }
+
+    return normalizedPath;
   }
 }

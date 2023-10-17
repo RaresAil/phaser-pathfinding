@@ -82,7 +82,7 @@
       
     
 
-    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
+    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="PathNode-nav"><a href="module-PhaserPathfinding.PathNode.html">PathNode</a></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
   </nav>
 
   <div id="main">
@@ -233,7 +233,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line16">line 16</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line17">line 17</a>
         </li>
       </ul>
     </dd>
@@ -290,7 +290,7 @@
       </svg>
     </a>
     <h4 class="name" id="findPathBetweenPx">
-      <span class="type-signature"></span>findPathBetweenPx<span class="signature">(start, target)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.Node.html">Node</a>>}</span>
+      <span class="type-signature"></span>findPathBetweenPx<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
     </h4>
   </span>
 
@@ -321,7 +321,11 @@
       <th>Type</th>
 
       
+        <th>Attributes</th>
+      
 
+      
+        <th>Default</th>
       
 
       <th class="last">Description</th>
@@ -349,7 +353,19 @@
         </td>
 
         
+          <td class="attributes">
+            
 
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+          </td>
         
 
         <td class="description last">
@@ -378,11 +394,68 @@
         </td>
 
         
+          <td class="attributes">
+            
 
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+          </td>
         
 
         <td class="description last">
           <p>The target position in tile unit</p>
+          
+        </td>
+      </tr>
+
+    
+      <tr>
+        
+          <td class="name"><code>simplify</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+              false
+            
+          </td>
+        
+
+        <td class="description last">
+          <p>If true the path will return only the nodes that change direction</p>
           
         </td>
       </tr>
@@ -426,7 +499,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line68">line 68</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line77">line 77</a>
         </li>
       </ul>
     </dd>
@@ -465,7 +538,7 @@
       </svg>
     </a>
     <h4 class="name" id="findPathBetweenTl">
-      <span class="type-signature"></span>findPathBetweenTl<span class="signature">(start, target)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.Node.html">Node</a>>}</span>
+      <span class="type-signature"></span>findPathBetweenTl<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
     </h4>
   </span>
 
@@ -496,7 +569,11 @@
       <th>Type</th>
 
       
+        <th>Attributes</th>
+      
 
+      
+        <th>Default</th>
       
 
       <th class="last">Description</th>
@@ -524,7 +601,19 @@
         </td>
 
         
+          <td class="attributes">
+            
 
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+          </td>
         
 
         <td class="description last">
@@ -553,11 +642,68 @@
         </td>
 
         
+          <td class="attributes">
+            
 
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+          </td>
         
 
         <td class="description last">
           <p>The target position in tile unit</p>
+          
+        </td>
+      </tr>
+
+    
+      <tr>
+        
+          <td class="name"><code>simplify</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+              false
+            
+          </td>
+        
+
+        <td class="description last">
+          <p>If true the path will return only the nodes that change direction</p>
           
         </td>
       </tr>
@@ -601,7 +747,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line26">line 26</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line28">line 28</a>
         </li>
       </ul>
     </dd>

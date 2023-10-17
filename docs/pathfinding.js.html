@@ -84,7 +84,7 @@
       
     
 
-    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
+    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="PathNode-nav"><a href="module-PhaserPathfinding.PathNode.html">PathNode</a></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
   </nav>
 
   <div id="main">
@@ -106,6 +106,7 @@ var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pathfinding = void 0;
 var lodash_1 = __importDefault(require("lodash"));
+var path_node_1 = require("./path-node");
 var heap_1 = require("./heap");
 /**
  * @class
@@ -122,9 +123,11 @@ var Pathfinding = /** @class */ (function () {
      * The 2 vectors must point to the position in tile unit not in px
      * @param {Phaser.Math.Vector2} start The start position in tile unit
      * @param {Phaser.Math.Vector2} target The target position in tile unit
-     * @return {Node[]} An array of nodes that represent the path, empty if no path was found
+     * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+     * @return {PathNode[]} An array of nodes that represent the path, empty if no path was found
      */
-    Pathfinding.prototype.findPathBetweenTl = function (start, target) {
+    Pathfinding.prototype.findPathBetweenTl = function (start, target, simplify) {
+        if (simplify === void 0) { simplify = false; }
         var startNode = this.grid.getNode(start.x, start.y);
         var targetNode = this.grid.getNode(target.x, target.y);
         if (!startNode || startNode.walkable === false) {
@@ -134,17 +137,18 @@ var Pathfinding = /** @class */ (function () {
             return [];
         }
         var openSet = new heap_1.Heap();
-        var closedSet = new heap_1.Heap();
+        var closedSet = {};
         openSet.add(startNode);
         while (openSet.length > 0) {
             var currentNode = openSet.removeFirst();
-            closedSet.add(currentNode);
+            closedSet[currentNode.name.toString()] = true;
             if (currentNode.equals(targetNode)) {
-                return this.retracePath(startNode, currentNode);
+                return this.retracePath(startNode, currentNode, simplify);
             }
             for (var _i = 0, _a = this.grid.getNeighbors(currentNode); _i &lt; _a.length; _i++) {
                 var neighbor = _a[_i];
-                if (neighbor.walkable === false || closedSet.contains(neighbor)) {
+                if (neighbor.walkable === false ||
+                    closedSet[neighbor.name.toString()]) {
                     continue;
                 }
                 var newMoveCost = currentNode.gCost + this.getDistance(currentNode, neighbor);
@@ -155,6 +159,10 @@ var Pathfinding = /** @class */ (function () {
                     if (!openSet.contains(neighbor)) {
                         openSet.add(neighbor);
                     }
+                    else {
+                        console.log('update', neighbor);
+                        openSet.updateItem(neighbor);
+                    }
                 }
             }
         }
@@ -164,9 +172,11 @@ var Pathfinding = /** @class */ (function () {
      * The 2 vectors must point to the position in pixels
      * @param {Phaser.Math.Vector2} start The start position in pixels
      * @param {Phaser.Math.Vector2} target The target position in tile unit
-     * @return {Node[]} An array of nodes that represent the path, empty if no path was found
+     * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+     * @return {PathNode[]} An array of nodes that represent the path, empty if no path was found
      */
-    Pathfinding.prototype.findPathBetweenPx = function (start, target) {
+    Pathfinding.prototype.findPathBetweenPx = function (start, target, simplify) {
+        if (simplify === void 0) { simplify = false; }
         if (!start || !target) {
             return [];
         }
@@ -175,8 +185,7 @@ var Pathfinding = /** @class */ (function () {
         if (!startPosition || !targetPosition) {
             return [];
         }
-        console.log('findPathGameObjects', startPosition, start);
-        return [];
+        return this.findPathBetweenTl(startPosition, targetPosition, simplify);
     };
     Pathfinding.prototype.getDistance = function (first, second) {
         var disX = Math.abs(first.x - second.x);
@@ -186,9 +195,9 @@ var Pathfinding = /** @class */ (function () {
         }
         return 14 * disX + 10 * (disY - disX);
     };
-    Pathfinding.prototype.retracePath = function (start, target) {
+    Pathfinding.prototype.retracePath = function (start, target, simplify) {
         var path = [];
-        var currentNode = target;
+        var currentNode = lodash_1.default.cloneDeep(target);
         while (!currentNode.equals(start)) {
             if (!currentNode.parent) {
                 throw new Error('PANIC No parent found');
@@ -198,10 +207,27 @@ var Pathfinding = /** @class */ (function () {
             currentNode.worldY = pos === null || pos === void 0 ? void 0 : pos.y;
             var nodeToPush = currentNode;
             currentNode = currentNode.parent;
-            delete nodeToPush.parent;
-            path.push(lodash_1.default.cloneDeep(nodeToPush));
+            path.push(nodeToPush);
         }
-        return path.reverse();
+        return this.normalizePath(path, simplify).reverse();
+    };
+    Pathfinding.prototype.normalizePath = function (path, simplify) {
+        if (!simplify) {
+            return path.map(function (node) {
+                return new path_node_1.PathNode(node.x, node.y, node.worldX, node.worldY, node.width, node.height);
+            });
+        }
+        var normalizedPath = [];
+        var oldPosition = new Phaser.Math.Vector2();
+        for (var i = 1; i &lt; path.length; i++) {
+            var newPosition = new Phaser.Math.Vector2(path[i - 1].x - path[+i].x, path[i - 1].y - path[+i].y);
+            if (!oldPosition.equals(newPosition)) {
+                var node = path[+i];
+                normalizedPath.push(new path_node_1.PathNode(node.x, node.y, node.worldX, node.worldY, node.width, node.height));
+            }
+            oldPosition = newPosition;
+        }
+        return normalizedPath;
     };
     return Pathfinding;
 }());

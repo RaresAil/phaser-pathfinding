@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      PhaserPathfinding - Documentation
+      path-node.js - Documentation
   </title>
 
   
@@ -88,128 +90,54 @@
   <div id="main">
     
       <h1 class="page-title">
-        PhaserPathfinding
+        path-node.js
       </h1>
     
 
     
+      
 
 <section>
-  <header>
-    
-  </header>
-
   <article>
-    <div class="container-overview">
-      
-        
-
-        
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="index.js.html">index.js</a>, <a href="index.js.html#line2">line 2</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-        
-      
-    </div>
-
-    
-
-    
-
-    
-      <h3 class="subsection-title">Classes</h3>
-
-      <dl>
-        
-          <dt>
-            <a href="module-PhaserPathfinding.Grid.html">Grid</a>
-          </dt>
-          <dd>
-            
-          </dd>
-        
-          <dt>
-            <a href="module-PhaserPathfinding.Node.html">Node</a>
-          </dt>
-          <dd>
-            
-          </dd>
-        
-          <dt>
-            <a href="module-PhaserPathfinding.PathNode.html">PathNode</a>
-          </dt>
-          <dd>
-            
-          </dd>
-        
-          <dt>
-            <a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a>
-          </dt>
-          <dd>
-            
-          </dd>
-        
-      </dl>
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
+    <pre class="prettyprint source linenums"><code>"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PathNode = void 0;
+/**
+ * @class
+ * @classdesc
+ * The PathNode class is returned by the pathfinding algorithm and represents the node in the found path
+ * @param {number} tileX The x position in tile unit
+ * @param {number} tileY The y position in tile unit
+ * @param {number} worldX The x position in pixels
+ * @param {number} worldY The y position in pixels
+ * @param {number} tileWidth The width of the tile in px
+ * @param {number} tileHeight The height of the tile in px
+ *
+ * @property {number} tileX The x position in tile unit
+ * @property {number} tileY The y position in tile unit
+ * @property {number} worldX The x position in pixels
+ * @property {number} worldY The y position in pixels
+ * @property {number} tileWidth The width of the tile in px
+ * @property {number} tileHeight The height of the tile in px
+ * @memberof module:PhaserPathfinding
+ */
+var PathNode = /** @class */ (function () {
+    function PathNode(tileX, tileY, worldX, worldY, tileWidth, tileHeight) {
+        this.tileX = tileX;
+        this.tileY = tileY;
+        this.worldX = worldX;
+        this.worldY = worldY;
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
+    }
+    return PathNode;
+}());
+exports.PathNode = PathNode;
+//# sourceMappingURL=path-node.js.map</code></pre>
   </article>
 </section>
 
-
+    
 
 
   </div>

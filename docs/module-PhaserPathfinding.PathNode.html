@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      Node - Documentation
+      PathNode - Documentation
   </title>
 
   
@@ -88,7 +88,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        Node
+        PathNode
       </h1>
     
 
@@ -101,13 +101,13 @@
         
           <span class="ancestors"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a>.</span>
         
-        Node
+        PathNode
         
       </h2>
 
       
         <div class="class-description">
-          <p>The Node class represents a node in the grid, normally you don't need to use this one, usually the pathfinding algorithm will return a <a href="module-PhaserPathfinding.PathNode.html">PathNode</a></p>
+          <p>The PathNode class is returned by the pathfinding algorithm and represents the node in the found path</p>
         </div>
       
     
@@ -124,13 +124,13 @@
   
 
   <span class='name-container'>
-    <a class="link-icon" href="#Node">
+    <a class="link-icon" href="#PathNode">
       <svg height="20" width="20" style="fill: black;">
         <use xlink:href="#linkIcon"></use>
       </svg>
     </a>
-    <h4 class="name" id="Node">
-      <span class="type-signature"></span>new Node<span class="signature">(walkable, x, y, width, height)</span><span class="type-signature"></span>
+    <h4 class="name" id="PathNode">
+      <span class="type-signature"></span>new PathNode<span class="signature">(tileX, tileY, worldX, worldY, tileWidth, tileHeight)</span><span class="type-signature"></span>
     </h4>
   </span>
 
@@ -168,36 +168,7 @@
     
       <tr>
         
-          <td class="name"><code>walkable</code></td>
-        
-
-        <td class="type">
-          
-            
-    <span class="param-type">
-      boolean
-    </span>
-
-    
-
-
-          
-        </td>
-
-        
-
-        
-
-        <td class="description last">
-          <p>If false the node is an obstacle</p>
-          
-        </td>
-      </tr>
-
-    
-      <tr>
-        
-          <td class="name"><code>x</code></td>
+          <td class="name"><code>tileX</code></td>
         
 
         <td class="type">
@@ -226,7 +197,7 @@
     
       <tr>
         
-          <td class="name"><code>y</code></td>
+          <td class="name"><code>tileY</code></td>
         
 
         <td class="type">
@@ -255,7 +226,65 @@
     
       <tr>
         
-          <td class="name"><code>width</code></td>
+          <td class="name"><code>worldX</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The x position in pixels</p>
+          
+        </td>
+      </tr>
+
+    
+      <tr>
+        
+          <td class="name"><code>worldY</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The y position in pixels</p>
+          
+        </td>
+      </tr>
+
+    
+      <tr>
+        
+          <td class="name"><code>tileWidth</code></td>
         
 
         <td class="type">
@@ -284,7 +313,7 @@
     
       <tr>
         
-          <td class="name"><code>height</code></td>
+          <td class="name"><code>tileHeight</code></td>
         
 
         <td class="type">
@@ -344,7 +373,7 @@
 
     <tr>
       
-        <td class="name"><code>x</code></td>
+        <td class="name"><code>tileX</code></td>
       
 
       <td class="type">
@@ -373,7 +402,7 @@
 
     <tr>
       
-        <td class="name"><code>y</code></td>
+        <td class="name"><code>tileY</code></td>
       
 
       <td class="type">
@@ -423,7 +452,7 @@
         
 
         <td class="description last">
-          <p>Only exists on the nodes returned by the pathfinding algorithm and represents the x position in pixels</p>
+          <p>The x position in pixels</p>
           </td>
     </tr>
 
@@ -452,7 +481,7 @@
         
 
         <td class="description last">
-          <p>Only exists on the nodes returned by the pathfinding algorithm and represents the y position in pixels</p>
+          <p>The y position in pixels</p>
           </td>
     </tr>
 
@@ -460,7 +489,7 @@
 
     <tr>
       
-        <td class="name"><code>width</code></td>
+        <td class="name"><code>tileWidth</code></td>
       
 
       <td class="type">
@@ -489,7 +518,7 @@
 
     <tr>
       
-        <td class="name"><code>height</code></td>
+        <td class="name"><code>tileHeight</code></td>
       
 
       <td class="type">
@@ -511,35 +540,6 @@
 
         <td class="description last">
           <p>The height of the tile in px</p>
-          </td>
-    </tr>
-
-  
-
-    <tr>
-      
-        <td class="name"><code>walkable</code></td>
-      
-
-      <td class="type">
-        
-          
-    <span class="param-type">
-      boolean
-    </span>
-
-    
-
-
-        
-      </td>
-
-        
-
-        
-
-        <td class="description last">
-          <p>If false the node is an obstacle</p>
           </td>
     </tr>
 
@@ -581,7 +581,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="node.js.html">node.js</a>, <a href="node.js.html#line40">line 40</a>
+          <a href="path-node.js.html">path-node.js</a>, <a href="path-node.js.html#line23">line 23</a>
         </li>
       </ul>
     </dd>
@@ -622,302 +622,6 @@
 
     
 
-    
-      <h3 class="subsection-title">Methods</h3>
-
-      
-        
-
-
-  
-
-  <span class='name-container'>
-    <a class="link-icon" href="#compare">
-      <svg height="20" width="20" style="fill: black;">
-        <use xlink:href="#linkIcon"></use>
-      </svg>
-    </a>
-    <h4 class="name" id="compare">
-      <span class="type-signature"></span>compare<span class="signature">(other)</span><span class="type-signature"> &rarr; {number}</span>
-    </h4>
-  </span>
-
-  
-
-
-
-  <div class="description">
-    <p>This is used internally by the pathfinding algorithm</p>
-  </div>
-
-
-
-
-
-
-
-  <h5>Parameters:</h5>
-  
-
-<table class="params">
-  <thead>
-    <tr>
-      
-        <th>Name</th>
-      
-
-      <th>Type</th>
-
-      
-
-      
-
-      <th class="last">Description</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    
-      <tr>
-        
-          <td class="name"><code>other</code></td>
-        
-
-        <td class="type">
-          
-            
-    <span class="param-type">
-      <a href="module-PhaserPathfinding.Node.html">Node</a>
-    </span>
-
-    
-
-
-          
-        </td>
-
-        
-
-        
-
-        <td class="description last">
-          <p>Another node to compare the cost</p>
-          
-        </td>
-      </tr>
-
-    
-  </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="node.js.html">node.js</a>, <a href="node.js.html#line88">line 88</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-        
-
-
-  
-
-  <span class='name-container'>
-    <a class="link-icon" href="#equals">
-      <svg height="20" width="20" style="fill: black;">
-        <use xlink:href="#linkIcon"></use>
-      </svg>
-    </a>
-    <h4 class="name" id="equals">
-      <span class="type-signature"></span>equals<span class="signature">(other)</span><span class="type-signature"> &rarr; {boolean}</span>
-    </h4>
-  </span>
-
-  
-
-
-
-  <div class="description">
-    <p>This is used internally by the pathfinding algorithm</p>
-  </div>
-
-
-
-
-
-
-
-  <h5>Parameters:</h5>
-  
-
-<table class="params">
-  <thead>
-    <tr>
-      
-        <th>Name</th>
-      
-
-      <th>Type</th>
-
-      
-
-      
-
-      <th class="last">Description</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    
-      <tr>
-        
-          <td class="name"><code>other</code></td>
-        
-
-        <td class="type">
-          
-            
-    <span class="param-type">
-      <a href="module-PhaserPathfinding.Node.html">Node</a>
-    </span>
-
-    
-
-
-          
-        </td>
-
-        
-
-        
-
-        <td class="description last">
-          <p>Another node to compare the equality</p>
-          
-        </td>
-      </tr>
-
-    
-  </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="node.js.html">node.js</a>, <a href="node.js.html#line104">line 104</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
     
 
     
