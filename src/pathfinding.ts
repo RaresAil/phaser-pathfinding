@@ -65,11 +65,11 @@ export class Pathfinding {
         }
 
         const newMoveCost =
-          currentNode.gCost + this.getDistance(currentNode, neighbor);
+          currentNode.gCost + this.getChebyshevDistance(currentNode, neighbor);
 
         if (newMoveCost < neighbor.gCost || !openSet.contains(neighbor)) {
           neighbor.gCost = newMoveCost;
-          neighbor.hCost = this.getDistance(neighbor, targetNode);
+          neighbor.hCost = this.getChebyshevDistance(neighbor, targetNode);
           neighbor.parent = currentNode;
 
           if (!openSet.contains(neighbor)) {
@@ -110,6 +110,7 @@ export class Pathfinding {
     return this.findPathBetweenTl(startPosition, targetPosition, simplify);
   }
 
+  // Method not currently used but could be useful in the future
   private getDistance(first: Node, second: Node) {
     const disX = Math.abs(first.x - second.x);
     const disY = Math.abs(first.y - second.y);
@@ -119,6 +120,13 @@ export class Pathfinding {
     }
 
     return 14 * disX + 10 * (disY - disX);
+  }
+
+  private getChebyshevDistance(first: Node, second: Node) {
+    const disX = Math.abs(first.x - second.x);
+    const disY = Math.abs(first.y - second.y);
+
+    return 10 * Math.max(disX, disY);
   }
 
   private retracePath(

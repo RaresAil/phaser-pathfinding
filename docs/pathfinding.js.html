@@ -154,10 +154,10 @@ var Pathfinding = /** @class */ (function () {
                     closedSet[neighbor.name.toString()]) {
                     continue;
                 }
-                var newMoveCost = currentNode.gCost + this.getDistance(currentNode, neighbor);
+                var newMoveCost = currentNode.gCost + this.getChebyshevDistance(currentNode, neighbor);
                 if (newMoveCost &lt; neighbor.gCost || !openSet.contains(neighbor)) {
                     neighbor.gCost = newMoveCost;
-                    neighbor.hCost = this.getDistance(neighbor, targetNode);
+                    neighbor.hCost = this.getChebyshevDistance(neighbor, targetNode);
                     neighbor.parent = currentNode;
                     if (!openSet.contains(neighbor)) {
                         openSet.add(neighbor);
@@ -189,6 +189,7 @@ var Pathfinding = /** @class */ (function () {
         }
         return this.findPathBetweenTl(startPosition, targetPosition, simplify);
     };
+    // Method not currently used but could be useful in the future
     Pathfinding.prototype.getDistance = function (first, second) {
         var disX = Math.abs(first.x - second.x);
         var disY = Math.abs(first.y - second.y);
@@ -196,6 +197,11 @@ var Pathfinding = /** @class */ (function () {
             return 14 * disY + 10 * (disX - disY);
         }
         return 14 * disX + 10 * (disY - disX);
+    };
+    Pathfinding.prototype.getChebyshevDistance = function (first, second) {
+        var disX = Math.abs(first.x - second.x);
+        var disY = Math.abs(first.y - second.y);
+        return 10 * Math.max(disX, disY);
     };
     Pathfinding.prototype.retracePath = function (start, target, simplify) {
         var path = [];
