@@ -97,10 +97,10 @@ export class Heap<T extends HeapItem> {
   }
 
   private swap(first: T, second: T) {
-    this.items[first.index] = second;
-    this.items[second.index] = first;
-    const itemAIndex = first.index;
-    first.index = second.index;
+    this.items[parseInt(first.index.toString())] = second;
+    this.items[parseInt(second.index.toString())] = first;
+    const itemAIndex = parseInt(first.index.toString());
+    first.index = parseInt(second.index.toString());
     second.index = itemAIndex;
   }
 }

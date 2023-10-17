@@ -30,7 +30,7 @@ export class Grid {
    */
   public getNode(x: number, y: number): Node | undefined {
     return _.cloneDeep(
-      this.grid[parseInt(x.toString())]?.[parseInt(y.toString())]
+      this.grid[parseInt(y.toString())]?.[parseInt(x.toString())]
     );
   }
 

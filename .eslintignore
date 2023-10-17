@@ -1,1 +1,4 @@
 dist
+example
+node_modules
+docs

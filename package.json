@@ -1,6 +1,6 @@
 {
   "name": "@raresail/phaser-pathfinding",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A phaser3 pathfinding algorithm using heap data structure",
   "main": "dist/index.js",
   "homepage": "https://github.com/RaresAil/phaser-pathfinding",
@@ -52,7 +52,8 @@
     "generate:docs": "rm -rf ./docs/ && yarn build && node_modules/.bin/jsdoc --configure .jsdoc.json --verbose && node ./scripts/build-docs.js",
     "prepublishOnly": "yarn build",
     "build": "rm -rf ./dist/ && tsc -p .",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts",
+    "dev:webpack": "cd ./example && yarn dev"
   },
   "dependencies": {
     "lodash": "^4.17.21"
