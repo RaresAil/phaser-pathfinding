@@ -141,7 +141,7 @@ class Example extends Phaser.Scene {
     this.source = this.add.rectangle(24, 24, 24, 24, 0xf1c40f);
   }
 
-  async moveToTile(tilePosition) {
+  moveToTile(tilePosition) {
     const sourceCurrentTile = this.grid.getTilePositionInWorld(
       new Phaser.Math.Vector2(this.source.x, this.source.y)
     );
@@ -150,11 +150,28 @@ class Example extends Phaser.Scene {
       return;
     }
 
-    const path = await this.pathfinding.findPathBetweenTl(
+    this.map.replaceByIndex(
+      1,
+      2,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      0
+    );
+    const path = this.pathfinding.findPathBetweenTl(
       sourceCurrentTile,
       tilePosition
     );
     console.log(path);
+    path.forEach(({ tileX, tileY }) => {
+      const t = this.map.getTileAt(tileX, tileY, false, 0);
+      if (!t) {
+        return;
+      }
+
+      t.index = 1;
+    });
   }
 }
 
