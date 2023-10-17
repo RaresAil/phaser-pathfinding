@@ -7,6 +7,8 @@ class Example extends Phaser.Scene {
   grid = undefined;
   map = undefined;
 
+  timeText = undefined;
+
   preload() {
     this.load.image('map', 'map.png');
     this.input.on(
@@ -31,6 +33,17 @@ class Example extends Phaser.Scene {
   }
 
   create() {
+    this.timeText = this.make
+      .text({
+        x: 10,
+        y: 448,
+        text: 'Time: -',
+        style: {
+          color: '#000000'
+        }
+      })
+      .setDepth(1000);
+
     const tileSize = 24;
     const walkableData = [
       [
@@ -159,11 +172,15 @@ class Example extends Phaser.Scene {
       undefined,
       0
     );
+
+    const start = Date.now();
     const path = this.pathfinding.findPathBetweenTl(
       sourceCurrentTile,
       tilePosition
     );
-    console.log(path);
+    const time = Date.now() - start;
+    this.timeText?.setText(`Time: ${time}ms`);
+
     path.forEach(({ tileX, tileY }) => {
       const t = this.map.getTileAt(tileX, tileY, false, 0);
       if (!t) {
