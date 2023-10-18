@@ -39,6 +39,9 @@ module.exports = {
         },
         {
           from: 'map.png'
+        },
+        {
+          from: 'source.png'
         }
       ]
     }),
