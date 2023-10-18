@@ -1,4 +1,8 @@
-const { Pathfinding, Grid } = require('@raresail/phaser-pathfinding');
+const {
+  Pathfinding,
+  Grid,
+  DistanceMethod
+} = require('@raresail/phaser-pathfinding');
 const Phaser = require('phaser');
 
 class Example extends Phaser.Scene {
@@ -7,7 +11,12 @@ class Example extends Phaser.Scene {
   grid = undefined;
   map = undefined;
 
+  simplify = false;
+  method = DistanceMethod.Octile;
+
+  methodText = undefined;
   timeText = undefined;
+  simText = undefined;
 
   preload() {
     this.load.image('map', 'map.png');
@@ -38,6 +47,27 @@ class Example extends Phaser.Scene {
         x: 10,
         y: 448,
         text: 'Time: -',
+        style: {
+          color: '#000000'
+        }
+      })
+      .setDepth(1000);
+    this.simText = this.make
+      .text({
+        x: 128,
+        y: 448,
+        text: '| Simplify: false (Press S)',
+        style: {
+          color: '#000000'
+        }
+      })
+      .setDepth(1000);
+
+    this.methodText = this.make
+      .text({
+        x: 395,
+        y: 448,
+        text: '| Method: Octile (Press M)',
         style: {
           color: '#000000'
         }
@@ -176,7 +206,9 @@ class Example extends Phaser.Scene {
     const start = Date.now();
     const path = this.pathfinding.findPathBetweenTl(
       sourceCurrentTile,
-      tilePosition
+      tilePosition,
+      this.simplify,
+      this.method
     );
     const time = Date.now() - start;
     this.timeText?.setText(`Time: ${time}ms`);
@@ -197,7 +229,7 @@ const gameConfig = {
 
   type: Phaser.AUTO,
   scale: {
-    width: 800,
+    width: 744,
     height: 480,
     mode: Phaser.Scale.NONE,
     zoom: 1

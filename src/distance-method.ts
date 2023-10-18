@@ -5,6 +5,8 @@ export enum DistanceMethod {
   Chebyshev = 'chebyshev',
   /**
    * It is a distance metric between two points in an N-dimensional vector space.
+   *
+   * _**When set to this method, the path won't include diagonal movement**_
    */
   Manhattan = 'manhattan',
   /**
