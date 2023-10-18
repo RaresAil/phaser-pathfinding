@@ -6,6 +6,7 @@ const {
 const Phaser = require('phaser');
 
 class Example extends Phaser.Scene {
+  pathGraphics = undefined;
   pathfinding = undefined;
   source = undefined;
   grid = undefined;
@@ -71,6 +72,7 @@ class Example extends Phaser.Scene {
 
   preload() {
     this.load.image('map', 'map.png');
+    this.load.image('source', 'source.png');
     this.input.on(
       'pointerup',
       (pointer) => {
@@ -243,7 +245,12 @@ class Example extends Phaser.Scene {
     this.grid = Grid.createFromMap(this.map, [obstaclesLayer]);
     this.pathfinding = new Pathfinding(this.grid);
 
-    this.source = this.add.rectangle(24, 24, 24, 24, 0xf1c40f);
+    this.source = this.add.follower(
+      new Phaser.Curves.Spline(),
+      36,
+      36,
+      'source'
+    );
   }
 
   moveToTile(tilePosition) {
@@ -255,15 +262,7 @@ class Example extends Phaser.Scene {
       return;
     }
 
-    this.map.replaceByIndex(
-      1,
-      2,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      0
-    );
+    this.pathGraphics?.clear();
 
     const start = Date.now();
     const path = this.pathfinding.findPathBetweenTl(
@@ -278,14 +277,28 @@ class Example extends Phaser.Scene {
     const time = Date.now() - start;
     this.timeText?.setText(`Time: ${time}ms`);
 
-    path.forEach(({ tileX, tileY }) => {
-      const t = this.map.getTileAt(tileX, tileY, false, 0);
-      if (!t) {
-        return;
-      }
+    const curvePath = new Phaser.Curves.Path(this.source.x, this.source.y);
+    const points = [
+      new Phaser.Math.Vector2(this.source.x, this.source.y),
+      ...path.map(({ worldX, worldY }) => {
+        const pos = new Phaser.Math.Vector2(worldX, worldY);
+        curvePath.lineTo(pos);
+        return pos;
+      })
+    ];
 
-      t.index = 1;
-    });
+    this.pathGraphics = this.add.graphics();
+
+    this.pathGraphics.lineStyle(2, 0x000000, 1);
+    curvePath.draw(this.pathGraphics);
+    this.pathGraphics.fillStyle(0x00ff00, 1);
+
+    for (let i = 0; i < points.length; i++) {
+      this.pathGraphics.fillCircle(points[i].x, points[i].y, 4);
+    }
+
+    this.source.setPath(curvePath);
+    this.source.startFollow(points.length * 100);
   }
 }
 
