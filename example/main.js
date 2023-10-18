@@ -18,6 +18,42 @@ class Example extends Phaser.Scene {
   timeText = undefined;
   simText = undefined;
 
+  init() {
+    this.input.keyboard?.on(
+      `${Phaser.Input.Keyboard.Events.KEY_DOWN}M`,
+      () => {
+        if (!this.methodText) {
+          return;
+        }
+
+        if (this.method === DistanceMethod.Octile) {
+          this.method = DistanceMethod.Manhattan;
+          this.methodText.text = '| Method: Manhattan (Press M)';
+        } else if (this.method === DistanceMethod.Manhattan) {
+          this.method = DistanceMethod.Chebyshev;
+          this.methodText.text = '| Method: Chebyshev (Press M)';
+        } else {
+          this.method = DistanceMethod.Octile;
+          this.methodText.text = '| Method: Octile (Press M)';
+        }
+      },
+      this
+    );
+
+    this.input.keyboard?.on(
+      `${Phaser.Input.Keyboard.Events.KEY_DOWN}S`,
+      () => {
+        if (!this.simText) {
+          return;
+        }
+
+        this.simplify = !this.simplify;
+        this.simText.text = `| Simplify: ${this.simplify} (Press S)`;
+      },
+      this
+    );
+  }
+
   preload() {
     this.load.image('map', 'map.png');
     this.input.on(
