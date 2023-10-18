@@ -1,14 +1,25 @@
 import _ from 'lodash';
 
+import { DistanceMethod } from './distance-method';
 import { Node, NodeMatrix } from './node';
 import { PathNode } from './path-node';
 import { Grid } from './grid';
 import { Heap } from './heap';
 
 /**
+ * @typedef DistanceMethod
+ * @property {octile} Octile Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
+ * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.
+ * @property {chebyshev} Chebyshev It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
+ *
+ * @memberof module:PhaserPathfinding
+ */
+
+/**
  * @class
  * @classdesc
  * The Pathfinding class is used to find a path between 2 points in a grid
+ * NOTE: If you want to change the grid after creating the Pathfinding object you need to create a new one as the grid is cloned internally
  * @param {module:PhaserPathfinding.Grid} grid
  * @memberof module:PhaserPathfinding
  */
@@ -24,12 +35,14 @@ export class Pathfinding {
    * @param {Phaser.Math.Vector2} start The start position in tile unit
    * @param {Phaser.Math.Vector2} target The target position in tile unit
    * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+   * @param {module:PhaserPathfinding.DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link module:PhaserPathfinding.DistanceMethod}
    * @return {module:PhaserPathfinding.PathNode[]} An array of nodes that represent the path, empty if no path was found
    */
   public findPathBetweenTl(
     start: Phaser.Math.Vector2,
     target: Phaser.Math.Vector2,
-    simplify: boolean = false
+    simplify: boolean = false,
+    distanceMethod: DistanceMethod = DistanceMethod.Octile
   ): PathNode[] {
     const pathMatrix = _.cloneDeep(this.matrixClone);
     const startNode = this.grid.getNode(start.x, start.y, pathMatrix);
@@ -64,12 +77,22 @@ export class Pathfinding {
           continue;
         }
 
+        let getDistance = this.getOctileDistance;
+        switch (distanceMethod) {
+          case DistanceMethod.Chebyshev:
+            getDistance = this.getChebyshevDistance;
+            break;
+          case DistanceMethod.Manhattan:
+            getDistance = this.getManhattanDistance;
+            break;
+        }
+
         const newMoveCost =
-          currentNode.gCost + this.getChebyshevDistance(currentNode, neighbor);
+          currentNode.gCost + getDistance(currentNode, neighbor);
 
         if (newMoveCost < neighbor.gCost || !openSet.contains(neighbor)) {
           neighbor.gCost = newMoveCost;
-          neighbor.hCost = this.getChebyshevDistance(neighbor, targetNode);
+          neighbor.hCost = getDistance(neighbor, targetNode);
           neighbor.parent = currentNode;
 
           if (!openSet.contains(neighbor)) {
@@ -89,12 +112,14 @@ export class Pathfinding {
    * @param {Phaser.Math.Vector2} start The start position in pixels
    * @param {Phaser.Math.Vector2} target The target position in tile unit
    * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+   * @param {module:PhaserPathfinding.DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link module:PhaserPathfinding.DistanceMethod}
    * @return {module:PhaserPathfinding.PathNode[]} An array of nodes that represent the path, empty if no path was found
    */
   public findPathBetweenPx(
     start: Phaser.Math.Vector2,
     target: Phaser.Math.Vector2,
-    simplify: boolean = false
+    simplify: boolean = false,
+    distanceMethod: DistanceMethod = DistanceMethod.Octile
   ): PathNode[] {
     if (!start || !target) {
       return [];
@@ -107,11 +132,16 @@ export class Pathfinding {
       return [];
     }
 
-    return this.findPathBetweenTl(startPosition, targetPosition, simplify);
+    return this.findPathBetweenTl(
+      startPosition,
+      targetPosition,
+      simplify,
+      distanceMethod
+    );
   }
 
   // Method not currently used but could be useful in the future
-  private getDistance(first: Node, second: Node) {
+  private getOctileDistance(first: Node, second: Node) {
     const disX = Math.abs(first.x - second.x);
     const disY = Math.abs(first.y - second.y);
 
@@ -127,6 +157,13 @@ export class Pathfinding {
     const disY = Math.abs(first.y - second.y);
 
     return 10 * Math.max(disX, disY);
+  }
+
+  private getManhattanDistance(first: Node, second: Node) {
+    const disX = Math.abs(first.x - second.x);
+    const disY = Math.abs(first.y - second.y);
+
+    return 10 * (disX + disY);
   }
 
   private retracePath(

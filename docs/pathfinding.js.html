@@ -106,12 +106,22 @@ var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pathfinding = void 0;
 var lodash_1 = __importDefault(require("lodash"));
+var distance_method_1 = require("./distance-method");
 var path_node_1 = require("./path-node");
 var heap_1 = require("./heap");
+/**
+ * @typedef DistanceMethod
+ * @property {octile} Octile Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
+ * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.
+ * @property {chebyshev} Chebyshev It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
+ *
+ * @memberof module:PhaserPathfinding
+ */
 /**
  * @class
  * @classdesc
  * The Pathfinding class is used to find a path between 2 points in a grid
+ * NOTE: If you want to change the grid after creating the Pathfinding object you need to create a new one as the grid is cloned internally
  * @param {Grid} grid
  * @memberof module:PhaserPathfinding
  */
@@ -126,10 +136,12 @@ var Pathfinding = /** @class */ (function () {
      * @param {Phaser.Math.Vector2} start The start position in tile unit
      * @param {Phaser.Math.Vector2} target The target position in tile unit
      * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+     * @param {DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link DistanceMethod}
      * @return {PathNode[]} An array of nodes that represent the path, empty if no path was found
      */
-    Pathfinding.prototype.findPathBetweenTl = function (start, target, simplify) {
+    Pathfinding.prototype.findPathBetweenTl = function (start, target, simplify, distanceMethod) {
         if (simplify === void 0) { simplify = false; }
+        if (distanceMethod === void 0) { distanceMethod = distance_method_1.DistanceMethod.Octile; }
         var pathMatrix = lodash_1.default.cloneDeep(this.matrixClone);
         var startNode = this.grid.getNode(start.x, start.y, pathMatrix);
         var targetNode = this.grid.getNode(target.x, target.y, pathMatrix);
@@ -154,10 +166,19 @@ var Pathfinding = /** @class */ (function () {
                     closedSet[neighbor.name.toString()]) {
                     continue;
                 }
-                var newMoveCost = currentNode.gCost + this.getChebyshevDistance(currentNode, neighbor);
+                var getDistance = this.getOctileDistance;
+                switch (distanceMethod) {
+                    case distance_method_1.DistanceMethod.Chebyshev:
+                        getDistance = this.getChebyshevDistance;
+                        break;
+                    case distance_method_1.DistanceMethod.Manhattan:
+                        getDistance = this.getManhattanDistance;
+                        break;
+                }
+                var newMoveCost = currentNode.gCost + getDistance(currentNode, neighbor);
                 if (newMoveCost &lt; neighbor.gCost || !openSet.contains(neighbor)) {
                     neighbor.gCost = newMoveCost;
-                    neighbor.hCost = this.getChebyshevDistance(neighbor, targetNode);
+                    neighbor.hCost = getDistance(neighbor, targetNode);
                     neighbor.parent = currentNode;
                     if (!openSet.contains(neighbor)) {
                         openSet.add(neighbor);
@@ -175,10 +196,12 @@ var Pathfinding = /** @class */ (function () {
      * @param {Phaser.Math.Vector2} start The start position in pixels
      * @param {Phaser.Math.Vector2} target The target position in tile unit
      * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
+     * @param {DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link DistanceMethod}
      * @return {PathNode[]} An array of nodes that represent the path, empty if no path was found
      */
-    Pathfinding.prototype.findPathBetweenPx = function (start, target, simplify) {
+    Pathfinding.prototype.findPathBetweenPx = function (start, target, simplify, distanceMethod) {
         if (simplify === void 0) { simplify = false; }
+        if (distanceMethod === void 0) { distanceMethod = distance_method_1.DistanceMethod.Octile; }
         if (!start || !target) {
             return [];
         }
@@ -187,10 +210,10 @@ var Pathfinding = /** @class */ (function () {
         if (!startPosition || !targetPosition) {
             return [];
         }
-        return this.findPathBetweenTl(startPosition, targetPosition, simplify);
+        return this.findPathBetweenTl(startPosition, targetPosition, simplify, distanceMethod);
     };
     // Method not currently used but could be useful in the future
-    Pathfinding.prototype.getDistance = function (first, second) {
+    Pathfinding.prototype.getOctileDistance = function (first, second) {
         var disX = Math.abs(first.x - second.x);
         var disY = Math.abs(first.y - second.y);
         if (disX > disY) {
@@ -202,6 +225,11 @@ var Pathfinding = /** @class */ (function () {
         var disX = Math.abs(first.x - second.x);
         var disY = Math.abs(first.y - second.y);
         return 10 * Math.max(disX, disY);
+    };
+    Pathfinding.prototype.getManhattanDistance = function (first, second) {
+        var disX = Math.abs(first.x - second.x);
+        var disY = Math.abs(first.y - second.y);
+        return 10 * (disX + disY);
     };
     Pathfinding.prototype.retracePath = function (start, target, simplify) {
         var path = [];

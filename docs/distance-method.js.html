@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      Home - Documentation
+      distance-method.js - Documentation
   </title>
 
   
@@ -47,14 +49,14 @@
 
   <div class="top-nav-wrapper">
     <ul>
-      <li  class="active" >
+      <li >
         <a href="index.html">
           
-          
-            <svg fill="#0095dd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
+          
           
         </a>
       </li>
@@ -87,74 +89,37 @@
 
   <div id="main">
     
+      <h1 class="page-title">
+        distance-method.js
+      </h1>
+    
 
     
       
 
-
-
-    
-
-      
-
-
-  <section class="readme">
-    <article>
-      <h1>@raresail/phaser-pathfinding</h1>
-<p>A phaser pathfinding algorithm using heap data structure</p>
-<p><a href="https://raresail.github.io/phaser-pathfinding/">Documentation</a>
-<a href="https://raresail.github.io/phaser-pathfinding/module-PhaserPathfinding.html">Type Definitions</a></p>
-<h2>Documentation</h2>
-<p>For a complete documentation on how to change the distance method used in calculating the path or simplification of the path, check the above link, supported distance methods at this moment:</p>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Octile</td>
-<td>Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement</td>
-</tr>
-<tr>
-<td>Chebyshev</td>
-<td>It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension</td>
-</tr>
-<tr>
-<td>Manhattan</td>
-<td>It is a distance metric between two points in an N-dimensional vector space.</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2>Installation</h2>
-<pre class="prettyprint source lang-bash"><code>yarn add @raresail/phaser-pathfinding
-</code></pre>
-<h2>Usage</h2>
-<pre class="prettyprint source lang-ts"><code>// Create a grid from the existing tilemap and specify the layers that are obstacles, in the current case the water layer is not walkable
-const grid = Grid.createFromMap(map, [waterLayer]);
-
-// The pathfinding instance is created from the grid and is used to get the path between 2 vectors on the map
-const pathfinding = new Pathfinding(grid);
-
-// The tl method is used for tile units and the `findPathBetweenPx` method is used to find the path based on pixels
-const path = this.pathfinding.findPathBetweenTl(
-  new Phaser.Math.Vector2(0, 0),
-  new Phaser.Math.Vector2(10, 10)
-);
-
-// The path variable will be an array of nodes that can be used to move the &quot;enemy&quot; let's say towards the target
-// The props worldX and worldY contains the position in pixels for that specific node
-console.log(path[0].worldX, path[0].worldY);
-</code></pre>
-    </article>
-  </section>
-
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DistanceMethod = void 0;
+var DistanceMethod;
+(function (DistanceMethod) {
+    /**
+     * It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
+     */
+    DistanceMethod["Chebyshev"] = "chebyshev";
+    /**
+     * It is a distance metric between two points in an N-dimensional vector space.
+     */
+    DistanceMethod["Manhattan"] = "manhattan";
+    /**
+     * Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
+     */
+    DistanceMethod["Octile"] = "octile";
+})(DistanceMethod || (exports.DistanceMethod = DistanceMethod = {}));
+//# sourceMappingURL=distance-method.js.map</code></pre>
+  </article>
+</section>
 
     
 

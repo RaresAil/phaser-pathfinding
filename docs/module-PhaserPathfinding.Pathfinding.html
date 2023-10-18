@@ -107,7 +107,8 @@
 
       
         <div class="class-description">
-          <p>The Pathfinding class is used to find a path between 2 points in a grid</p>
+          <p>The Pathfinding class is used to find a path between 2 points in a grid
+NOTE: If you want to change the grid after creating the Pathfinding object you need to create a new one as the grid is cloned internally</p>
         </div>
       
     
@@ -233,7 +234,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line17">line 17</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line27">line 27</a>
         </li>
       </ul>
     </dd>
@@ -290,7 +291,7 @@
       </svg>
     </a>
     <h4 class="name" id="findPathBetweenPx">
-      <span class="type-signature"></span>findPathBetweenPx<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
+      <span class="type-signature"></span>findPathBetweenPx<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>, distanceMethod<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
     </h4>
   </span>
 
@@ -461,6 +462,51 @@
       </tr>
 
     
+      <tr>
+        
+          <td class="name"><code>distanceMethod</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a>
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+              Octile
+            
+          </td>
+        
+
+        <td class="description last">
+          <p>Choose the distance method to use, for more info see <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a></p>
+          
+        </td>
+      </tr>
+
+    
   </tbody>
 </table>
 
@@ -499,7 +545,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line79">line 79</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line101">line 101</a>
         </li>
       </ul>
     </dd>
@@ -538,7 +584,7 @@
       </svg>
     </a>
     <h4 class="name" id="findPathBetweenTl">
-      <span class="type-signature"></span>findPathBetweenTl<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
+      <span class="type-signature"></span>findPathBetweenTl<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>, distanceMethod<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
     </h4>
   </span>
 
@@ -709,6 +755,51 @@
       </tr>
 
     
+      <tr>
+        
+          <td class="name"><code>distanceMethod</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a>
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+              Octile
+            
+          </td>
+        
+
+        <td class="description last">
+          <p>Choose the distance method to use, for more info see <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a></p>
+          
+        </td>
+      </tr>
+
+    
   </tbody>
 </table>
 
@@ -747,7 +838,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line30">line 30</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line41">line 41</a>
         </li>
       </ul>
     </dd>
