@@ -15,8 +15,8 @@
     "collapse": false,
     "resources": {
       "github": "https://github.com/RaresAil/phaser-pathfinding",
-      "documentation": "https://raresail.github.io/phaser-pathfinding/",
-      "npm": "https://www.npmjs.com/package/@raresail/phaser-pathfinding"
+      "npm": "https://www.npmjs.com/package/@raresail/phaser-pathfinding",
+      "live-example": "/example"
     }
   },
   "opts": {
