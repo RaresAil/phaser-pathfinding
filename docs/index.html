@@ -82,7 +82,7 @@
       
     
 
-    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
+    <h3>Classes</h3><ul><li id="Grid-nav"><a href="module-PhaserPathfinding.Grid.html">Grid</a><ul class='methods'><li data-type="method" id="Grid-cloneMatrix-nav"><a href="module-PhaserPathfinding.Grid.html#cloneMatrix">cloneMatrix</a></li><li data-type="method" id="Grid-getNode-nav"><a href="module-PhaserPathfinding.Grid.html#getNode">getNode</a></li><li data-type="method" id="Grid-getTilePositionInWorld-nav"><a href="module-PhaserPathfinding.Grid.html#getTilePositionInWorld">getTilePositionInWorld</a></li><li data-type="method" id="Grid-getWorldPositionFromNode-nav"><a href="module-PhaserPathfinding.Grid.html#getWorldPositionFromNode">getWorldPositionFromNode</a></li><li data-type="method" id="Grid-createFromMap-nav"><a href="module-PhaserPathfinding.Grid.html#.createFromMap">createFromMap</a></li></ul></li><li id="Node-nav"><a href="module-PhaserPathfinding.Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-compare-nav"><a href="module-PhaserPathfinding.Node.html#compare">compare</a></li><li data-type="method" id="Node-equals-nav"><a href="module-PhaserPathfinding.Node.html#equals">equals</a></li></ul></li><li id="PathNode-nav"><a href="module-PhaserPathfinding.PathNode.html">PathNode</a></li><li id="Pathfinding-nav"><a href="module-PhaserPathfinding.Pathfinding.html">Pathfinding</a><ul class='methods'><li data-type="method" id="Pathfinding-findPathBetweenPx-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenPx">findPathBetweenPx</a></li><li data-type="method" id="Pathfinding-findPathBetweenTl-nav"><a href="module-PhaserPathfinding.Pathfinding.html#findPathBetweenTl">findPathBetweenTl</a></li></ul></li></ul><h3>Modules</h3><ul><li id="PhaserPathfinding-nav"><a href="module-PhaserPathfinding.html">PhaserPathfinding</a></li></ul>
   </nav>
 
   <div id="main">
@@ -102,7 +102,36 @@
     <article>
       <h1>@raresail/phaser-pathfinding</h1>
 <p>A phaser pathfinding algorithm using heap data structure</p>
-<p><a href="https://raresail.github.io/phaser-pathfinding/">Documentation</a></p>
+<p><a href="https://raresail.github.io/phaser-pathfinding/">Documentation</a>
+<a href="https://raresail.github.io/phaser-pathfinding/module-PhaserPathfinding.html">Type Definitions</a></p>
+<h2>Documentation</h2>
+<p>For a complete documentation on how to change the distance method used in calculating the path or simplification of the path, check the above link, supported distance methods at this moment:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Octile</td>
+<td>Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement</td>
+</tr>
+<tr>
+<td>Chebyshev</td>
+<td>It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension</td>
+</tr>
+<tr>
+<td>Manhattan</td>
+<td>It is a distance metric between two points in an N-dimensional vector space. <em><strong>When set to this method, and if the diagonal is disabled, the path won't include zig zag moves</strong></em></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2>Installation</h2>
 <pre class="prettyprint source lang-bash"><code>yarn add @raresail/phaser-pathfinding
 </code></pre>

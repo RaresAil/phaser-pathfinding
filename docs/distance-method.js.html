@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      node.js - Documentation
+      distance-method.js - Documentation
   </title>
 
   
@@ -90,7 +90,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        node.js
+        distance-method.js
       </h1>
     
 
@@ -100,121 +100,26 @@
 <section>
   <article>
     <pre class="prettyprint source linenums"><code>"use strict";
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" &amp;&amp; b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Node = void 0;
-/* eslint-disable no-use-before-define */
-var heap_1 = require("./heap");
-/**
- * @class
- * @classdesc
- * The Node class represents a node in the grid, normally you don't need to use this one, usually the pathfinding algorithm will return a [PathNode]{@link PathNode}
- * @param {boolean} walkable If false the node is an obstacle
- * @param {number} x The x position in tile unit
- * @param {number} y The y position in tile unit
- * @param {number} width The width of the tile in px
- * @param {number} height The height of the tile in px
- *
- * @property {number} x The x position in tile unit
- * @property {number} y The y position in tile unit
- * @property {number} worldX Only exists on the nodes returned by the pathfinding algorithm and represents the x position in pixels
- * @property {number} worldY Only exists on the nodes returned by the pathfinding algorithm and represents the y position in pixels
- * @property {number} width The width of the tile in px
- * @property {number} height The height of the tile in px
- * @property {boolean} walkable If false the node is an obstacle
- * @memberof module:PhaserPathfinding
- */
-var Node = /** @class */ (function (_super) {
-    __extends(Node, _super);
-    function Node(
+exports.DistanceMethod = void 0;
+var DistanceMethod;
+(function (DistanceMethod) {
     /**
-     * If true the node is walkable
+     * It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
      */
-    walkable, 
+    DistanceMethod["Chebyshev"] = "chebyshev";
     /**
-     * The x position in tile unit
-     */
-    x, 
-    /**
-     * The y position in tile unit
-     */
-    y, 
-    /**
-     * The width of the tile in px
-     */
-    width, 
-    /**
-     * The height of the tile in px
-     */
-    height) {
-        var _this = _super.call(this) || this;
-        _this.walkable = walkable;
-        _this.x = x;
-        _this.y = y;
-        _this.width = width;
-        _this.height = height;
-        return _this;
-    }
-    Object.defineProperty(Node.prototype, "name", {
-        /**
-         * Used for by the pathfinding algorithm
-         * @ignore
-         */
-        get: function () {
-            return "".concat(this.x, ",").concat(this.y);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    /**
+     * It is a distance metric between two points in an N-dimensional vector space.
      *
-     * This is used internally by the pathfinding algorithm
-     * @param {Node} other Another node to compare the cost
-     * @return {number}
+     * _**When set to this method, and if the diagonal is disabled, the path won't include zig zag moves**_
      */
-    Node.prototype.compare = function (other) {
-        if (!other) {
-            return -1;
-        }
-        var compare = this.fCost - other.fCost;
-        if (compare === 0) {
-            compare = this.hCost - other.hCost;
-        }
-        return -compare;
-    };
+    DistanceMethod["Manhattan"] = "manhattan";
     /**
-     *
-     * This is used internally by the pathfinding algorithm
-     * @param {Node} other Another node to compare the equality
-     * @return {boolean}
+     * Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
      */
-    Node.prototype.equals = function (other) {
-        if (!other) {
-            return false;
-        }
-        if (!(other instanceof Node)) {
-            return false;
-        }
-        return this.x === other.x &amp;&amp; this.y === other.y;
-    };
-    return Node;
-}(heap_1.HeapItem));
-exports.Node = Node;
-//# sourceMappingURL=node.js.map</code></pre>
+    DistanceMethod["Octile"] = "octile";
+})(DistanceMethod || (exports.DistanceMethod = DistanceMethod = {}));
+//# sourceMappingURL=distance-method.js.map</code></pre>
   </article>
 </section>
 

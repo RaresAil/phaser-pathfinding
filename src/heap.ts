@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /* eslint-disable no-use-before-define */
 export abstract class HeapItem {
   public abstract compare(other: HeapItem): number;
@@ -28,11 +30,11 @@ export class Heap<T extends HeapItem> {
   }
 
   public removeFirst(): T {
-    const first = this.items[0];
+    const first = _.cloneDeep(this.items[0]);
     this.currentCount--;
     this.items[0] = this.items[this.currentCount];
     this.items[0].index = 0;
-    this.sortDown(first);
+    this.sortDown(this.items[0]);
     return first;
   }
 

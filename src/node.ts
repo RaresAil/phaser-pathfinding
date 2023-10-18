@@ -6,7 +6,7 @@ export type NodeMatrix = Node[][];
 /**
  * @class
  * @classdesc
- * The Node class represents a node in the grid
+ * The Node class represents a node in the grid, normally you don't need to use this one, usually the pathfinding algorithm will return a [PathNode]{@link module:PhaserPathfinding.PathNode}
  * @param {boolean} walkable If false the node is an obstacle
  * @param {number} x The x position in tile unit
  * @param {number} y The y position in tile unit
@@ -37,6 +37,10 @@ export class Node extends HeapItem {
    */
   public worldY?: number;
 
+  /**
+   * Used for by the pathfinding algorithm
+   * @ignore
+   */
   public get name() {
     return `${this.x},${this.y}`;
   }
