@@ -10,7 +10,7 @@ export enum DistanceMethod {
    */
   Manhattan = 'manhattan',
   /**
-   * Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
+   * (Recommended) Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
    */
   Octile = 'octile'
 }

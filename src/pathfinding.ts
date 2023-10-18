@@ -14,7 +14,7 @@ export interface PathfindingConfig {
 
 /**
  * @typedef DistanceMethod
- * @property {octile} Octile Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
+ * @property {octile} Octile (Recommended) Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
  * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.<br/>**When set to this method, and if the diagonal is disabled, the path won't include zig zag moves**
  * @property {chebyshev} Chebyshev It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
  *
@@ -86,7 +86,12 @@ export class Pathfinding {
       closedSet[currentNode.name.toString()] = true;
 
       if (currentNode.equals(targetNode)) {
-        return this.retracePath(startNode, currentNode, defaultConfig.simplify);
+        return this.retracePath(
+          startNode,
+          currentNode,
+          defaultConfig.simplify,
+          defaultConfig.diagonal
+        );
       }
 
       for (const neighbor of this.grid.getNeighbors(
@@ -186,7 +191,8 @@ export class Pathfinding {
   private retracePath(
     start: Node,
     target: Node,
-    simplify: boolean
+    simplify: boolean,
+    diagonal: boolean
   ): PathNode[] {
     const path: Node[] = [];
     let currentNode = target;
@@ -197,20 +203,29 @@ export class Pathfinding {
       }
 
       const pos = this.grid.getWorldPositionFromNode(currentNode);
-      currentNode.worldX = pos?.x;
-      currentNode.worldY = pos?.y;
+      if (!pos) {
+        break;
+      }
 
-      const nodeToPush = currentNode;
+      currentNode.worldX = pos.x + currentNode.width / 2;
+      currentNode.worldY = pos.y + currentNode.height / 2;
+
+      const nodeToPush = _.cloneDeep(currentNode);
       currentNode = currentNode.parent;
 
       path.push(nodeToPush);
     }
 
-    return this.normalizePath(path, simplify).reverse();
+    return this.normalizePath(path, simplify, diagonal, start).reverse();
   }
 
-  private normalizePath(path: Node[], simplify: boolean): PathNode[] {
-    if (!simplify) {
+  private normalizePath(
+    path: Node[],
+    simplify: boolean,
+    diagonal: boolean,
+    startNode: Node
+  ): PathNode[] {
+    if (!simplify || path.length <= 2) {
       return path.map(
         (node) =>
           new PathNode(
@@ -245,6 +260,27 @@ export class Pathfinding {
             node.height
           )
         );
+      }
+
+      if (path.length - 1 === i && !diagonal) {
+        const checkStart = new Phaser.Math.Vector2(
+          path[parseInt(i.toString())].x - startNode.x,
+          path[parseInt(i.toString())].y - startNode.y
+        );
+
+        if (!newPosition.equals(checkStart)) {
+          const node = path[parseInt(i.toString())];
+          normalizedPath.push(
+            new PathNode(
+              node.x,
+              node.y,
+              node.worldX!,
+              node.worldY!,
+              node.width,
+              node.height
+            )
+          );
+        }
       }
 
       oldPosition = newPosition;

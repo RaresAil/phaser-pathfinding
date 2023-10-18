@@ -122,7 +122,7 @@ var path_node_1 = require("./path-node");
 var heap_1 = require("./heap");
 /**
  * @typedef DistanceMethod
- * @property {octile} Octile Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
+ * @property {octile} Octile (Recommended) Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
  * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.&lt;br/>**When set to this method, and if the diagonal is disabled, the path won't include zig zag moves**
  * @property {chebyshev} Chebyshev It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
  *
@@ -175,7 +175,7 @@ var Pathfinding = /** @class */ (function () {
             var currentNode = openSet.removeFirst();
             closedSet[currentNode.name.toString()] = true;
             if (currentNode.equals(targetNode)) {
-                return this.retracePath(startNode, currentNode, defaultConfig.simplify);
+                return this.retracePath(startNode, currentNode, defaultConfig.simplify, defaultConfig.diagonal);
             }
             for (var _i = 0, _a = this.grid.getNeighbors(currentNode, pathMatrix, defaultConfig.diagonal); _i &lt; _a.length; _i++) {
                 var neighbor = _a[_i];
@@ -245,7 +245,7 @@ var Pathfinding = /** @class */ (function () {
         var disY = Math.abs(first.y - second.y);
         return 10 * (disX + disY);
     };
-    Pathfinding.prototype.retracePath = function (start, target, simplify) {
+    Pathfinding.prototype.retracePath = function (start, target, simplify, diagonal) {
         var path = [];
         var currentNode = target;
         while (!currentNode.equals(start)) {
@@ -253,16 +253,19 @@ var Pathfinding = /** @class */ (function () {
                 throw new Error('PANIC No parent found');
             }
             var pos = this.grid.getWorldPositionFromNode(currentNode);
-            currentNode.worldX = pos === null || pos === void 0 ? void 0 : pos.x;
-            currentNode.worldY = pos === null || pos === void 0 ? void 0 : pos.y;
-            var nodeToPush = currentNode;
+            if (!pos) {
+                break;
+            }
+            currentNode.worldX = pos.x + currentNode.width / 2;
+            currentNode.worldY = pos.y + currentNode.height / 2;
+            var nodeToPush = lodash_1.default.cloneDeep(currentNode);
             currentNode = currentNode.parent;
             path.push(nodeToPush);
         }
-        return this.normalizePath(path, simplify).reverse();
+        return this.normalizePath(path, simplify, diagonal, start).reverse();
     };
-    Pathfinding.prototype.normalizePath = function (path, simplify) {
-        if (!simplify) {
+    Pathfinding.prototype.normalizePath = function (path, simplify, diagonal, startNode) {
+        if (!simplify || path.length &lt;= 2) {
             return path.map(function (node) {
                 return new path_node_1.PathNode(node.x, node.y, node.worldX, node.worldY, node.width, node.height);
             });
@@ -274,6 +277,13 @@ var Pathfinding = /** @class */ (function () {
             if (!oldPosition.equals(newPosition)) {
                 var node = path[i - 1];
                 normalizedPath.push(new path_node_1.PathNode(node.x, node.y, node.worldX, node.worldY, node.width, node.height));
+            }
+            if (path.length - 1 === i &amp;&amp; !diagonal) {
+                var checkStart = new Phaser.Math.Vector2(path[parseInt(i.toString())].x - startNode.x, path[parseInt(i.toString())].y - startNode.y);
+                if (!newPosition.equals(checkStart)) {
+                    var node = path[parseInt(i.toString())];
+                    normalizedPath.push(new path_node_1.PathNode(node.x, node.y, node.worldX, node.worldY, node.width, node.height));
+                }
             }
             oldPosition = newPosition;
         }
