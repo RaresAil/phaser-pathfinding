@@ -49,12 +49,20 @@ export class Grid {
    * This method is used internally by the pathfinding algorithm
    * @ignore
    */
-  public getNeighbors(node: Node, matrix: NodeMatrix = this.grid): Node[] {
+  public getNeighbors(
+    node: Node,
+    matrix: NodeMatrix = this.grid,
+    diagonal: boolean
+  ): Node[] {
     const neighbors: Node[] = [];
 
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
         if (x === 0 && y === 0) {
+          continue;
+        }
+
+        if (!diagonal && Math.abs(x) === Math.abs(y)) {
           continue;
         }
 

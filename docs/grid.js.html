@@ -147,12 +147,15 @@ var Grid = /** @class */ (function () {
      * This method is used internally by the pathfinding algorithm
      * @ignore
      */
-    Grid.prototype.getNeighbors = function (node, matrix) {
+    Grid.prototype.getNeighbors = function (node, matrix, diagonal) {
         if (matrix === void 0) { matrix = this.grid; }
         var neighbors = [];
         for (var x = -1; x &lt;= 1; x++) {
             for (var y = -1; y &lt;= 1; y++) {
                 if (x === 0 &amp;&amp; y === 0) {
+                    continue;
+                }
+                if (!diagonal &amp;&amp; Math.abs(x) === Math.abs(y)) {
                     continue;
                 }
                 var posCheck = new phaser_1.default.Math.Vector2(node.x + x, node.y + y);

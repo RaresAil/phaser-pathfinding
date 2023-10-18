@@ -6,13 +6,28 @@ import { PathNode } from './path-node';
 import { Grid } from './grid';
 import { Heap } from './heap';
 
+export interface PathfindingConfig {
+  distanceMethod: DistanceMethod;
+  simplify: boolean;
+  diagonal: boolean;
+}
+
 /**
  * @typedef DistanceMethod
  * @property {octile} Octile Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
- * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.<br/>**When set to this method, the path won't include diagonal movement**
+ * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.<br/>**When set to this method, and if the diagonal is disabled, the path won't include zig zag moves**
  * @property {chebyshev} Chebyshev It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
  *
  * @memberof module:PhaserPathfinding
+ */
+
+/**
+ * @typedef {Object} PathfindingConfig
+ * @memberof module:PhaserPathfinding
+ *
+ * @property {boolean} [simplify=false] If true the path will return only the nodes that change direction
+ * @property {module:PhaserPathfinding.DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link module:PhaserPathfinding.DistanceMethod}
+ * @property {boolean} [diagonal=true] If false the path won't have diagonal moves, and the Manhattan distance method will not have zig zag moves
  */
 
 /**
@@ -34,16 +49,21 @@ export class Pathfinding {
    * The 2 vectors must point to the position in tile unit not in px
    * @param {Phaser.Math.Vector2} start The start position in tile unit
    * @param {Phaser.Math.Vector2} target The target position in tile unit
-   * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
-   * @param {module:PhaserPathfinding.DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link module:PhaserPathfinding.DistanceMethod}
+   * @param {module:PhaserPathfinding.PathfindingConfig} config Extra parameters to configure the pathfinder
    * @return {module:PhaserPathfinding.PathNode[]} An array of nodes that represent the path, empty if no path was found
    */
   public findPathBetweenTl(
     start: Phaser.Math.Vector2,
     target: Phaser.Math.Vector2,
-    simplify: boolean = false,
-    distanceMethod: DistanceMethod = DistanceMethod.Octile
+    config?: PathfindingConfig
   ): PathNode[] {
+    const defaultConfig = {
+      distanceMethod: DistanceMethod.Octile,
+      diagonal: true,
+      simplify: false,
+      ...{ ...config }
+    };
+
     const pathMatrix = _.cloneDeep(this.matrixClone);
     const startNode = this.grid.getNode(start.x, start.y, pathMatrix);
     const targetNode = this.grid.getNode(target.x, target.y, pathMatrix);
@@ -66,10 +86,14 @@ export class Pathfinding {
       closedSet[currentNode.name.toString()] = true;
 
       if (currentNode.equals(targetNode)) {
-        return this.retracePath(startNode, currentNode, simplify);
+        return this.retracePath(startNode, currentNode, defaultConfig.simplify);
       }
 
-      for (const neighbor of this.grid.getNeighbors(currentNode, pathMatrix)) {
+      for (const neighbor of this.grid.getNeighbors(
+        currentNode,
+        pathMatrix,
+        defaultConfig.diagonal
+      )) {
         if (
           neighbor.walkable === false ||
           closedSet[neighbor.name.toString()]
@@ -78,7 +102,7 @@ export class Pathfinding {
         }
 
         let getDistance = this.getOctileDistance;
-        switch (distanceMethod) {
+        switch (defaultConfig.distanceMethod) {
           case DistanceMethod.Chebyshev:
             getDistance = this.getChebyshevDistance;
             break;
@@ -111,15 +135,13 @@ export class Pathfinding {
    * The 2 vectors must point to the position in pixels
    * @param {Phaser.Math.Vector2} start The start position in pixels
    * @param {Phaser.Math.Vector2} target The target position in tile unit
-   * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
-   * @param {module:PhaserPathfinding.DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link module:PhaserPathfinding.DistanceMethod}
+   * @param {module:PhaserPathfinding.PathfindingConfig} config Extra parameters to configure the pathfinder
    * @return {module:PhaserPathfinding.PathNode[]} An array of nodes that represent the path, empty if no path was found
    */
   public findPathBetweenPx(
     start: Phaser.Math.Vector2,
     target: Phaser.Math.Vector2,
-    simplify: boolean = false,
-    distanceMethod: DistanceMethod = DistanceMethod.Octile
+    config?: PathfindingConfig
   ): PathNode[] {
     if (!start || !target) {
       return [];
@@ -132,12 +154,7 @@ export class Pathfinding {
       return [];
     }
 
-    return this.findPathBetweenTl(
-      startPosition,
-      targetPosition,
-      simplify,
-      distanceMethod
-    );
+    return this.findPathBetweenTl(startPosition, targetPosition, config);
   }
 
   // Method not currently used but could be useful in the future

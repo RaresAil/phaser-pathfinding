@@ -234,7 +234,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line27">line 27</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line46">line 46</a>
         </li>
       </ul>
     </dd>
@@ -291,7 +291,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
       </svg>
     </a>
     <h4 class="name" id="findPathBetweenPx">
-      <span class="type-signature"></span>findPathBetweenPx<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>, distanceMethod<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
+      <span class="type-signature"></span>findPathBetweenPx<span class="signature">(start, target, config)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
     </h4>
   </span>
 
@@ -322,11 +322,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
       <th>Type</th>
 
       
-        <th>Attributes</th>
-      
 
-      
-        <th>Default</th>
       
 
       <th class="last">Description</th>
@@ -354,19 +350,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
         </td>
 
         
-          <td class="attributes">
-            
 
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-          </td>
         
 
         <td class="description last">
@@ -395,19 +379,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
         </td>
 
         
-          <td class="attributes">
-            
 
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-          </td>
         
 
         <td class="description last">
@@ -419,14 +391,14 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
     
       <tr>
         
-          <td class="name"><code>simplify</code></td>
+          <td class="name"><code>config</code></td>
         
 
         <td class="type">
           
             
     <span class="param-type">
-      boolean
+      <a href="module-PhaserPathfinding.html#.PathfindingConfig">PathfindingConfig</a>
     </span>
 
     
@@ -436,72 +408,11 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
         </td>
 
         
-          <td class="attributes">
-            
-              &lt;optional><br>
-            
 
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-              false
-            
-          </td>
         
 
         <td class="description last">
-          <p>If true the path will return only the nodes that change direction</p>
-          
-        </td>
-      </tr>
-
-    
-      <tr>
-        
-          <td class="name"><code>distanceMethod</code></td>
-        
-
-        <td class="type">
-          
-            
-    <span class="param-type">
-      <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a>
-    </span>
-
-    
-
-
-          
-        </td>
-
-        
-          <td class="attributes">
-            
-              &lt;optional><br>
-            
-
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-              Octile
-            
-          </td>
-        
-
-        <td class="description last">
-          <p>Choose the distance method to use, for more info see <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a></p>
+          <p>Extra parameters to configure the pathfinder</p>
           
         </td>
       </tr>
@@ -545,7 +456,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line101">line 101</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line117">line 117</a>
         </li>
       </ul>
     </dd>
@@ -584,7 +495,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
       </svg>
     </a>
     <h4 class="name" id="findPathBetweenTl">
-      <span class="type-signature"></span>findPathBetweenTl<span class="signature">(start, target, simplify<span class="signature-attributes">opt</span>, distanceMethod<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
+      <span class="type-signature"></span>findPathBetweenTl<span class="signature">(start, target, config)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="module-PhaserPathfinding.PathNode.html">PathNode</a>>}</span>
     </h4>
   </span>
 
@@ -615,11 +526,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
       <th>Type</th>
 
       
-        <th>Attributes</th>
-      
 
-      
-        <th>Default</th>
       
 
       <th class="last">Description</th>
@@ -647,19 +554,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
         </td>
 
         
-          <td class="attributes">
-            
 
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-          </td>
         
 
         <td class="description last">
@@ -688,19 +583,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
         </td>
 
         
-          <td class="attributes">
-            
 
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-          </td>
         
 
         <td class="description last">
@@ -712,14 +595,14 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
     
       <tr>
         
-          <td class="name"><code>simplify</code></td>
+          <td class="name"><code>config</code></td>
         
 
         <td class="type">
           
             
     <span class="param-type">
-      boolean
+      <a href="module-PhaserPathfinding.html#.PathfindingConfig">PathfindingConfig</a>
     </span>
 
     
@@ -729,72 +612,11 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
         </td>
 
         
-          <td class="attributes">
-            
-              &lt;optional><br>
-            
 
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-              false
-            
-          </td>
         
 
         <td class="description last">
-          <p>If true the path will return only the nodes that change direction</p>
-          
-        </td>
-      </tr>
-
-    
-      <tr>
-        
-          <td class="name"><code>distanceMethod</code></td>
-        
-
-        <td class="type">
-          
-            
-    <span class="param-type">
-      <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a>
-    </span>
-
-    
-
-
-          
-        </td>
-
-        
-          <td class="attributes">
-            
-              &lt;optional><br>
-            
-
-            
-
-            
-          </td>
-        
-
-        
-          <td class="default">
-            
-              Octile
-            
-          </td>
-        
-
-        <td class="description last">
-          <p>Choose the distance method to use, for more info see <a href="module-PhaserPathfinding.html#.DistanceMethod">DistanceMethod</a></p>
+          <p>Extra parameters to configure the pathfinder</p>
           
         </td>
       </tr>
@@ -838,7 +660,7 @@ NOTE: If you want to change the grid after creating the Pathfinding object you n
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line41">line 41</a>
+          <a href="pathfinding.js.html">pathfinding.js</a>, <a href="pathfinding.js.html#line59">line 59</a>
         </li>
       </ul>
     </dd>

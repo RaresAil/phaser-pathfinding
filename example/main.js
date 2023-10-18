@@ -11,12 +11,14 @@ class Example extends Phaser.Scene {
   grid = undefined;
   map = undefined;
 
-  simplify = false;
   method = DistanceMethod.Octile;
+  simplify = false;
+  diagonal = true;
 
   methodText = undefined;
   timeText = undefined;
   simText = undefined;
+  digText = undefined;
 
   init() {
     this.input.keyboard?.on(
@@ -49,6 +51,19 @@ class Example extends Phaser.Scene {
 
         this.simplify = !this.simplify;
         this.simText.text = `| Simplify: ${this.simplify} (Press S)`;
+      },
+      this
+    );
+
+    this.input.keyboard?.on(
+      `${Phaser.Input.Keyboard.Events.KEY_DOWN}D`,
+      () => {
+        if (!this.digText) {
+          return;
+        }
+
+        this.diagonal = !this.diagonal;
+        this.digText.text = `| Diagonal ${this.diagonal} (Press D)`;
       },
       this
     );
@@ -104,6 +119,17 @@ class Example extends Phaser.Scene {
         x: 395,
         y: 448,
         text: '| Method: Octile (Press M)',
+        style: {
+          color: '#000000'
+        }
+      })
+      .setDepth(1000);
+
+    this.digText = this.make
+      .text({
+        x: 395,
+        y: 466,
+        text: '| Diagonal true (Press D)',
         style: {
           color: '#000000'
         }
@@ -243,8 +269,11 @@ class Example extends Phaser.Scene {
     const path = this.pathfinding.findPathBetweenTl(
       sourceCurrentTile,
       tilePosition,
-      this.simplify,
-      this.method
+      {
+        simplify: this.simplify,
+        distanceMethod: this.method,
+        diagonal: this.diagonal
+      }
     );
     const time = Date.now() - start;
     this.timeText?.setText(`Time: ${time}ms`);
@@ -266,7 +295,7 @@ const gameConfig = {
   type: Phaser.AUTO,
   scale: {
     width: 744,
-    height: 480,
+    height: 490,
     mode: Phaser.Scale.NONE,
     zoom: 1
   },

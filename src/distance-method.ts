@@ -6,7 +6,7 @@ export enum DistanceMethod {
   /**
    * It is a distance metric between two points in an N-dimensional vector space.
    *
-   * _**When set to this method, the path won't include diagonal movement**_
+   * _**When set to this method, and if the diagonal is disabled, the path won't include zig zag moves**_
    */
   Manhattan = 'manhattan',
   /**

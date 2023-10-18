@@ -100,6 +100,17 @@
 <section>
   <article>
     <pre class="prettyprint source linenums"><code>"use strict";
+var __assign = (this &amp;&amp; this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i &lt; n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
     return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
 };
@@ -112,10 +123,18 @@ var heap_1 = require("./heap");
 /**
  * @typedef DistanceMethod
  * @property {octile} Octile Is a variant of Chebyshev distance used when movement is allowed along diagonals in addition to horizontal and vertical directions, but diagonal movement has a cost of √2 times that of horizontal or vertical movement
- * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.&lt;br/>**When set to this method, the path won't include diagonal movement**
+ * @property {manhattan} Manhattan It is a distance metric between two points in an N-dimensional vector space.&lt;br/>**When set to this method, and if the diagonal is disabled, the path won't include zig zag moves**
  * @property {chebyshev} Chebyshev It is a distance metric defined on a vector space where the distance between two vectors is the greatest of their differences along any coordinate dimension
  *
  * @memberof module:PhaserPathfinding
+ */
+/**
+ * @typedef {Object} PathfindingConfig
+ * @memberof module:PhaserPathfinding
+ *
+ * @property {boolean} [simplify=false] If true the path will return only the nodes that change direction
+ * @property {DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link DistanceMethod}
+ * @property {boolean} [diagonal=true] If false the path won't have diagonal moves, and the Manhattan distance method will not have zig zag moves
  */
 /**
  * @class
@@ -135,13 +154,11 @@ var Pathfinding = /** @class */ (function () {
      * The 2 vectors must point to the position in tile unit not in px
      * @param {Phaser.Math.Vector2} start The start position in tile unit
      * @param {Phaser.Math.Vector2} target The target position in tile unit
-     * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
-     * @param {DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link DistanceMethod}
+     * @param {PathfindingConfig} config Extra parameters to configure the pathfinder
      * @return {PathNode[]} An array of nodes that represent the path, empty if no path was found
      */
-    Pathfinding.prototype.findPathBetweenTl = function (start, target, simplify, distanceMethod) {
-        if (simplify === void 0) { simplify = false; }
-        if (distanceMethod === void 0) { distanceMethod = distance_method_1.DistanceMethod.Octile; }
+    Pathfinding.prototype.findPathBetweenTl = function (start, target, config) {
+        var defaultConfig = __assign({ distanceMethod: distance_method_1.DistanceMethod.Octile, diagonal: true, simplify: false }, __assign({}, config));
         var pathMatrix = lodash_1.default.cloneDeep(this.matrixClone);
         var startNode = this.grid.getNode(start.x, start.y, pathMatrix);
         var targetNode = this.grid.getNode(target.x, target.y, pathMatrix);
@@ -158,16 +175,16 @@ var Pathfinding = /** @class */ (function () {
             var currentNode = openSet.removeFirst();
             closedSet[currentNode.name.toString()] = true;
             if (currentNode.equals(targetNode)) {
-                return this.retracePath(startNode, currentNode, simplify);
+                return this.retracePath(startNode, currentNode, defaultConfig.simplify);
             }
-            for (var _i = 0, _a = this.grid.getNeighbors(currentNode, pathMatrix); _i &lt; _a.length; _i++) {
+            for (var _i = 0, _a = this.grid.getNeighbors(currentNode, pathMatrix, defaultConfig.diagonal); _i &lt; _a.length; _i++) {
                 var neighbor = _a[_i];
                 if (neighbor.walkable === false ||
                     closedSet[neighbor.name.toString()]) {
                     continue;
                 }
                 var getDistance = this.getOctileDistance;
-                switch (distanceMethod) {
+                switch (defaultConfig.distanceMethod) {
                     case distance_method_1.DistanceMethod.Chebyshev:
                         getDistance = this.getChebyshevDistance;
                         break;
@@ -195,13 +212,10 @@ var Pathfinding = /** @class */ (function () {
      * The 2 vectors must point to the position in pixels
      * @param {Phaser.Math.Vector2} start The start position in pixels
      * @param {Phaser.Math.Vector2} target The target position in tile unit
-     * @param {boolean} [simplify=false] If true the path will return only the nodes that change direction
-     * @param {DistanceMethod} [distanceMethod=Octile] Choose the distance method to use, for more info see {@link DistanceMethod}
+     * @param {PathfindingConfig} config Extra parameters to configure the pathfinder
      * @return {PathNode[]} An array of nodes that represent the path, empty if no path was found
      */
-    Pathfinding.prototype.findPathBetweenPx = function (start, target, simplify, distanceMethod) {
-        if (simplify === void 0) { simplify = false; }
-        if (distanceMethod === void 0) { distanceMethod = distance_method_1.DistanceMethod.Octile; }
+    Pathfinding.prototype.findPathBetweenPx = function (start, target, config) {
         if (!start || !target) {
             return [];
         }
@@ -210,7 +224,7 @@ var Pathfinding = /** @class */ (function () {
         if (!startPosition || !targetPosition) {
             return [];
         }
-        return this.findPathBetweenTl(startPosition, targetPosition, simplify, distanceMethod);
+        return this.findPathBetweenTl(startPosition, targetPosition, config);
     };
     // Method not currently used but could be useful in the future
     Pathfinding.prototype.getOctileDistance = function (first, second) {
