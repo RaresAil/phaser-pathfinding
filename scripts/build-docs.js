@@ -56,5 +56,13 @@ img {
   );
 
   fse.copySync(location, docsLocation);
-  fse.removeSync(path.join(docsLocation, name));
+  fse.removeSync(path.join(docsLocation, name.split('/')[0]));
+  fse.renameSync(
+    path.join(process.cwd(), 'example', 'dist', 'index.html'),
+    path.join(process.cwd(), 'example', 'dist', 'example.html')
+  );
+  fse.copySync(
+    path.join(process.cwd(), 'example', 'dist'),
+    path.join(docsLocation)
+  );
 })();
