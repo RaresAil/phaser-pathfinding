@@ -158,6 +158,10 @@ var Grid = /** @class */ (function () {
                 if (!diagonal &amp;&amp; Math.abs(x) === Math.abs(y)) {
                     continue;
                 }
+                if (Math.abs(x) === Math.abs(y) &amp;&amp;
+                    !this.checkIfPossibleNeighbor(x, y, node)) {
+                    continue;
+                }
                 var posCheck = new phaser_1.default.Math.Vector2(node.x + x, node.y + y);
                 if (posCheck.x >= 0 &amp;&amp;
                     posCheck.x &lt; this.sizeX &amp;&amp;
@@ -244,6 +248,24 @@ var Grid = /** @class */ (function () {
         }
         this.grid[parseInt(y.toString())] = (_a = this.grid[parseInt(y.toString())]) !== null &amp;&amp; _a !== void 0 ? _a : [];
         this.grid[parseInt(y.toString())][parseInt(x.toString())] = new node_1.Node(walkable, x, y, width, height);
+    };
+    Grid.prototype.checkIfPossibleNeighbor = function (x, y, origin) {
+        var _this = this;
+        var isWalkable = function (nX, nY) {
+            var check = new phaser_1.default.Math.Vector2(origin.x + nX, origin.y + nY);
+            var n = _this.getNode(check.x, check.y);
+            if (!n) {
+                return false;
+            }
+            return n.walkable;
+        };
+        if (Math.abs(x) === 1 &amp;&amp;
+            Math.abs(y) === 1 &amp;&amp;
+            isWalkable(0, y) &amp;&amp;
+            isWalkable(x, 0)) {
+            return true;
+        }
+        return false;
     };
     return Grid;
 }());
