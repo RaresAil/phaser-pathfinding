@@ -66,6 +66,13 @@ export class Grid {
           continue;
         }
 
+        if (
+          Math.abs(x) === Math.abs(y) &&
+          !this.checkIfPossibleNeighbor(x, y, node)
+        ) {
+          continue;
+        }
+
         const posCheck = new Phaser.Math.Vector2(node.x + x, node.y + y);
 
         if (
@@ -197,5 +204,28 @@ export class Grid {
       width,
       height
     );
+  }
+
+  private checkIfPossibleNeighbor(x: number, y: number, origin: Node): boolean {
+    const isWalkable = (nX: number, nY: number): boolean => {
+      const check = new Phaser.Math.Vector2(origin.x + nX, origin.y + nY);
+      const n = this.getNode(check.x, check.y);
+      if (!n) {
+        return false;
+      }
+
+      return n.walkable;
+    };
+
+    if (
+      Math.abs(x) === 1 &&
+      Math.abs(y) === 1 &&
+      isWalkable(0, y) &&
+      isWalkable(x, 0)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 }
