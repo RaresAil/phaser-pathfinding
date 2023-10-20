@@ -73,10 +73,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@raresail/phaser-pathfinding@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@raresail/phaser-pathfinding/-/phaser-pathfinding-1.1.1.tgz#132ee1736951babe882b79b3a62d48294f5e1ed6"
-  integrity sha512-qGb7bl84ZYKE731IVlnJGDyW4eUTDbN0LBbucriNEWKC0+phIkPRrgXqJAeSiSYkFW2U5mbT+gZ3dlDyYowjww==
+"@raresail/phaser-pathfinding@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@raresail/phaser-pathfinding/-/phaser-pathfinding-1.1.2.tgz#4160c25567de2caed71c69a0761c695c0499e59a"
+  integrity sha512-tZK+c7gRV+A2txQ3N8crZ5egUX28yTxERmmoG5WuIy0gQH0ILG3Lw2ZIzyBO8nNTzo1CdRbXbWsegjgBWWlFDg==
   dependencies:
     lodash "^4.17.21"
 
