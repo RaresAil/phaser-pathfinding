@@ -31,13 +31,64 @@ const grid = Grid.createFromMap(map, [waterLayer]);
 // The pathfinding instance is created from the grid and is used to get the path between 2 vectors on the map
 const pathfinding = new Pathfinding(grid);
 
-// The tl method is used for tile units and the `findPathBetweenPx` method is used to find the path based on pixels
-const path = this.pathfinding.findPathBetweenTl(
-  new Phaser.Math.Vector2(0, 0),
-  new Phaser.Math.Vector2(10, 10)
+// The px method is used for pixels and the `findPathBetweenTl` method is used to find the path based on tile units
+const startPos = new Phaser.Math.Vector2(0, 0);
+const path = pathfinding.findPathBetweenPx(
+  startPos,
+  new Phaser.Math.Vector2(200, 200)
 );
+
+// Get the first node to move to and remove it from the path
+let targetNode = path.shift();
+
+const movingSpeed = 250; // 250 px per second
+let tween = undefined;
+
+// Method to call when you want to stop follow
+const stopFollowingPath = () => {
+    targetNode = undefined;
+    path = undefined;
+    tween?.stop();
+    tween = undefined;
+}
 
 // The path variable will be an array of nodes that can be used to move the "enemy" let's say towards the target
 // The props worldX and worldY contains the position in pixels for that specific node
-console.log(path[0].worldX, path[0].worldY);
+// This method will recursively move each node until the path is reached
+const moveOneNode = () => {
+  moveOneNode() {
+    if (!targetNode) {
+      stopFollowingPath();
+      return;
+    }
+
+    let speed = movingSpeed;
+    if (
+      startPos.x !== targetNode.worldX &&
+      startPos.y !== targetNode.worldY
+    ) {
+      // On diagonal, the movement is faster so to normalize it we need to divide by sqrt 2
+      speed /= Math.sqrt(2);
+    }
+
+    tween = scene.tweens.add({
+      targets: THE_ELEMENT_THAT_MOVES,
+      x: targetNode.worldX,
+      y: targetNode.worldY,
+      ease: 'Linear',
+      yoyo: false,
+      repeat: 0,
+      duration: speed,
+      onComplete: () => {
+        if (path?.length) {
+          targetNode = path.shift();
+          moveOneNode();
+        }
+      }
+    });
+  }
+}
+
+
+moveOneNode();
 ```
